@@ -1,15 +1,66 @@
-
 import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router';
 import { signOut } from 'firebase/auth';
-import { auth } from '../firebase';
-import { FaHome, FaNewspaper, FaUserTie, FaBars, FaTimes, FaSignOutAlt, FaComments } from 'react-icons/fa';
+import { auth, db } from '../firebase';
+import { 
+  FaHome, 
+  FaNewspaper, 
+  FaUserTie, 
+  FaBars, 
+  FaTimes, 
+  FaSignOutAlt, 
+  FaComments,
+  FaChartLine,  // Modelo financiero
+  FaBook,       // Servicios para instructores
+  FaTasks,      // Solicitudes de servicio
+  FaMoneyBillWave // Panel de pagos
+} from 'react-icons/fa';
+import { doc, getDoc, getDocs, query, where, collection } from 'firebase/firestore';
 import logoImage2 from '../assets/logo2.webp';
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isFounder, setIsFounder] = useState(false);
+  const [userRole, setUserRole] = useState('');
   const location = useLocation();
+
+  useEffect(() => {
+    // Cerrar el menú móvil cuando cambiamos de ruta
+    setIsMobileMenuOpen(false);
+    // Verificar si el usuario es fundador
+    checkUserRole();
+  }, [location]);
+
+  const checkUserRole = async () => {
+    try {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        // Primero intenta buscar el documento donde el ID es el UID del usuario
+        const userDocRef = doc(db, 'users', currentUser.uid);
+        const userDocSnap = await getDoc(userDocRef);
+        
+        if (userDocSnap.exists()) {
+          const userData = userDocSnap.data();
+          setIsFounder(userData.role === 'founder');
+          setUserRole(userData.role);
+        } else {
+          // Si no existe un documento con ese ID, intenta buscar donde uid == currentUser.uid
+          const userDocs = await getDocs(
+            query(collection(db, 'users'), where('uid', '==', currentUser.uid))
+          );
+          
+          if (!userDocs.empty) {
+            const userData = userDocs.docs[0].data();
+            setIsFounder(userData.role === 'founder');
+            setUserRole(userData.role);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error al verificar rol:', error);
+    }
+  };
 
   const handleSignOut = async () => {
     try {
@@ -19,17 +70,32 @@ const Dashboard = () => {
     }
   };
 
-  useEffect(() => {
-    // Cerrar el menú móvil cuando cambiamos de ruta
-    setIsMobileMenuOpen(false);
-  }, [location]);
-
-  const menuItems = [
+  // Construir el menú según el rol del usuario
+  const menuItems = [];
+  
+  // Elementos base para todos los usuarios
+  menuItems.push(
     { path: '/admin/dashboard', icon: <FaHome />, label: 'Inicio' },
     { path: '/admin/blog', icon: <FaNewspaper />, label: 'Blog' },
-    { path: '/admin/comments', icon: <FaComments />, label: 'Comentarios' }, // Nuevo ítem para comentarios
-    { path: '/admin/instructors', icon: <FaUserTie />, label: 'Instructores' },
-  ];
+    { path: '/admin/comments', icon: <FaComments />, label: 'Comentarios' }
+  );
+  
+  // Elementos para instructores y fundadores
+  if (userRole === 'instructor' || isFounder) {
+    menuItems.push(
+      { path: '/admin/instructor-services', icon: <FaBook />, label: 'Servicios' },
+      { path: '/admin/service-requests', icon: <FaTasks />, label: 'Solicitudes' }
+    );
+  }
+  
+  // Elementos solo para fundadores
+  if (isFounder) {
+    menuItems.push(
+      { path: '/admin/instructors', icon: <FaUserTie />, label: 'Instructores' },
+      { path: '/admin/financials', icon: <FaChartLine />, label: 'Modelo Financiero' },
+      { path: '/admin/payments', icon: <FaMoneyBillWave />, label: 'Pagos' }
+    );
+  }
 
   const isActive = (path) => {
     return location.pathname === path || location.pathname.startsWith(`${path}/`);
@@ -46,7 +112,6 @@ const Dashboard = () => {
         <div className="flex items-center justify-between px-4">
           <div className="flex items-center space-x-2">
             <img src={logoImage2} alt="Aeroboost" className="h-8" />
-            
           </div>
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -158,4 +223,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-

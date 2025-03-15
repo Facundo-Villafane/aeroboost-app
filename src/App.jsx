@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
 import { AuthProvider } from './admin/AuthProvider';
 
@@ -14,7 +13,6 @@ import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
 import ContactPage from './pages/ContactPage';
 
-
 // Componentes de Administración
 import Auth from './admin/Auth';
 import Dashboard from './admin/Dashboard';
@@ -25,6 +23,12 @@ import CommentManager from './admin/CommentManager';
 import ProtectedRoute from './admin/ProtectedRoute';
 import InstructorManager from './admin/InstructorManager';
 import InstructorEditor from './admin/InstructorEditor';
+
+// Nuevos componentes del sistema financiero
+import FinancialModel from './admin/FinancialModel';
+import InstructorServicesPanel from './admin/InstructorServicesPanel';
+import ServiceRequestsSystem from './admin/ServiceRequestsSystem';
+import FounderPaymentPanel from './admin/FounderPaymentPanel';
 
 const MainLayout = ({ children }) => {
   return (
@@ -93,6 +97,13 @@ function App() {
             <Route path="instructors" element={<InstructorManager />} />
             <Route path="instructors/new" element={<InstructorEditor />} />
             <Route path="instructors/edit/:id" element={<InstructorEditor />} />
+            
+            {/* Nuevas rutas para el sistema financiero */}
+            <Route path="financials" element={<FinancialModel />} />
+            <Route path="instructor-services" element={<InstructorServicesPanel />} />
+            <Route path="service-requests" element={<ServiceRequestsSystem />} />
+            <Route path="payments" element={<FounderPaymentPanel />} />
+            
             <Route index element={<Navigate to="/admin/dashboard" replace />} />
           </Route>
           

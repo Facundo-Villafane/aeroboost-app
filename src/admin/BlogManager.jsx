@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { 
@@ -10,10 +9,11 @@ import {
   orderBy,
   limit,
   startAfter,
-  where
+  where,
+  getDoc
 } from 'firebase/firestore';
-import { db } from '../firebase';
-import { FaPlus, FaSearch, FaEdit, FaEye, FaTrash } from 'react-icons/fa';
+import { db, auth } from '../firebase';
+import { FaPlus, FaSearch, FaEdit, FaEye, FaTrash, FaLock } from 'react-icons/fa';
 
 const BlogManager = () => {
   const navigate = useNavigate();
@@ -23,10 +23,43 @@ const BlogManager = () => {
   const [hasMore, setHasMore] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [postsPerPage] = useState(10);
+  const [isFounder, setIsFounder] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState('');
 
   useEffect(() => {
+    checkUserRole();
     fetchPosts();
   }, []);
+
+  const checkUserRole = async () => {
+    try {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        setCurrentUserId(currentUser.uid);
+        
+        // Primero intenta buscar el documento donde el ID es el UID del usuario
+        const userDocRef = doc(db, 'users', currentUser.uid);
+        const userDocSnap = await getDoc(userDocRef);
+        
+        if (userDocSnap.exists()) {
+          const userData = userDocSnap.data();
+          setIsFounder(userData.role === 'founder');
+        } else {
+          // Si no existe un documento con ese ID, intenta buscar donde uid == currentUser.uid
+          const userDocs = await getDocs(
+            query(collection(db, 'users'), where('uid', '==', currentUser.uid))
+          );
+          
+          if (!userDocs.empty) {
+            const userData = userDocs.docs[0].data();
+            setIsFounder(userData.role === 'founder');
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error al verificar rol:', error);
+    }
+  };
 
   const fetchPosts = async (search = '') => {
     setLoading(true);
@@ -57,7 +90,9 @@ const BlogManager = () => {
       } else {
         const docs = snapshot.docs.map(doc => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
+          // Añadir campo que indique si el usuario actual puede editar este post
+          canEdit: isFounder || doc.data().authorId === currentUserId
         }));
         
         setPosts(docs);
@@ -70,6 +105,18 @@ const BlogManager = () => {
       setLoading(false);
     }
   };
+
+  // Actualizar posts cuando cambia isFounder o currentUserId
+  useEffect(() => {
+    if (posts.length > 0) {
+      // Actualizar el campo canEdit para cada post
+      const updatedPosts = posts.map(post => ({
+        ...post,
+        canEdit: isFounder || post.authorId === currentUserId
+      }));
+      setPosts(updatedPosts);
+    }
+  }, [isFounder, currentUserId]);
 
   const fetchMorePosts = async () => {
     if (!lastVisible) return;
@@ -90,7 +137,9 @@ const BlogManager = () => {
       } else {
         const newDocs = snapshot.docs.map(doc => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
+          // Añadir campo que indique si el usuario actual puede editar este post
+          canEdit: isFounder || doc.data().authorId === currentUserId
         }));
         
         setPosts(prev => [...prev, ...newDocs]);
@@ -237,29 +286,51 @@ const BlogManager = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                        <button
-                          onClick={() => handleEditPost(post.id)}
-                          className="text-blue-600 hover:text-blue-900 mx-2"
-                          title="Editar"
-                        >
-                          <FaEdit />
-                        </button>
-                        <Link
-                          to={`/blog/${post.id}`}
-                          className="text-green-600 hover:text-green-900 mx-2"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          title="Ver"
-                        >
-                          <FaEye />
-                        </Link>
-                        <button
-                          onClick={() => handleDeletePost(post.id)}
-                          className="text-red-600 hover:text-red-900 mx-2"
-                          title="Eliminar"
-                        >
-                          <FaTrash />
-                        </button>
+                        {post.canEdit ? (
+                          <>
+                            <button
+                              onClick={() => handleEditPost(post.id)}
+                              className="text-blue-600 hover:text-blue-900 mx-2"
+                              title="Editar"
+                            >
+                              <FaEdit />
+                            </button>
+                            <Link
+                              to={`/blog/${post.id}`}
+                              className="text-green-600 hover:text-green-900 mx-2"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title="Ver"
+                            >
+                              <FaEye />
+                            </Link>
+                            <button
+                              onClick={() => handleDeletePost(post.id)}
+                              className="text-red-600 hover:text-red-900 mx-2"
+                              title="Eliminar"
+                            >
+                              <FaTrash />
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <span 
+                              className="text-gray-400 mx-2 cursor-not-allowed"
+                              title="No tienes permisos para editar esta publicación"
+                            >
+                              <FaLock />
+                            </span>
+                            <Link
+                              to={`/blog/${post.id}`}
+                              className="text-green-600 hover:text-green-900 mx-2"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title="Ver"
+                            >
+                              <FaEye />
+                            </Link>
+                          </>
+                        )}
                       </td>
                     </tr>
                   ))}

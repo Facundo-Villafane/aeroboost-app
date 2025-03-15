@@ -1,11 +1,20 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import { doc, getDoc, setDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { 
+  doc, 
+  getDoc, 
+  setDoc, 
+  addDoc, 
+  collection, 
+  serverTimestamp,
+  query,
+  where,
+  getDocs 
+} from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage, auth } from '../firebase';
 import { FaSave, FaImage, FaSpinner, FaTimes, FaEye, FaArrowLeft } from 'react-icons/fa';
-import QuillEditor from '../components/QuillEditor'; // Importar el nuevo componente
+import QuillEditor from '../components/QuillEditor';
 
 const BlogEditor = () => {
   const { id } = useParams();
@@ -19,7 +28,7 @@ const BlogEditor = () => {
     coverImage: '',
     status: 'Borrador',
     tags: [],
-    author: auth.currentUser?.displayName || auth.currentUser?.email || 'Admin',
+    author: '',
     authorId: auth.currentUser?.uid
   });
 
@@ -30,28 +39,96 @@ const BlogEditor = () => {
   const [previewMode, setPreviewMode] = useState(false);
   const [imageName, setImageName] = useState('');
   const [tagsInputValue, setTagsInputValue] = useState('');
+  const [isFounder, setIsFounder] = useState(false);
+
+  // Efecto para obtener el nombre del usuario actual
+  useEffect(() => {
+    const fetchUserName = async () => {
+      try {
+        const currentUser = auth.currentUser;
+        if (!currentUser) return;
+        
+        // Si el displayName está disponible, usarlo
+        if (currentUser.displayName) {
+          setPost(prev => ({ ...prev, author: currentUser.displayName }));
+          return;
+        }
+        
+        // Si no hay displayName, buscar el nombre en la colección de usuarios
+        const userDocRef = doc(db, 'users', currentUser.uid);
+        const userDocSnap = await getDoc(userDocRef);
+        
+        if (userDocSnap.exists() && userDocSnap.data().displayName) {
+          setPost(prev => ({ ...prev, author: userDocSnap.data().displayName }));
+          return;
+        }
+        
+        // Si no se encuentra por ID, buscar por uid
+        const userDocs = await getDocs(
+          query(collection(db, 'users'), where('uid', '==', currentUser.uid))
+        );
+        
+        if (!userDocs.empty && userDocs.docs[0].data().displayName) {
+          setPost(prev => ({ ...prev, author: userDocs.docs[0].data().displayName }));
+          return;
+        }
+        
+        // Si todo falla, usar el email
+        setPost(prev => ({ ...prev, author: currentUser.email }));
+      } catch (error) {
+        console.error('Error al obtener nombre de usuario:', error);
+        // Usar email como fallback si hay error
+        setPost(prev => ({ ...prev, author: auth.currentUser?.email || 'Usuario' }));
+      }
+    };
+    
+    if (!isEditMode) {
+      fetchUserName();
+    }
+  }, [isEditMode]);
+
+  useEffect(() => {
+    checkUserRole();
+  }, []);
 
   useEffect(() => {
     if (isEditMode) {
-      fetchPost();
+      fetchPostAndCheckPermission();
     } else {
-      const currentAuthor = auth.currentUser?.displayName || auth.currentUser?.email || 'Admin';
-      setPost({
-        title: '',
-        excerpt: '',
-        content: '',
-        coverImage: '',
-        status: 'Borrador',
-        tags: [],
-        author: currentAuthor,
-        authorId: auth.currentUser?.uid
-      });
       setTagsInputValue('');
       setError('');
     }
-  }, [id, isEditMode]);
+  }, [id, isEditMode, isFounder]);
 
-  const fetchPost = async () => {
+  const checkUserRole = async () => {
+    try {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        // Primero intenta buscar el documento donde el ID es el UID del usuario
+        const userDocRef = doc(db, 'users', currentUser.uid);
+        const userDocSnap = await getDoc(userDocRef);
+        
+        if (userDocSnap.exists()) {
+          const userData = userDocSnap.data();
+          setIsFounder(userData.role === 'founder');
+        } else {
+          // Si no existe un documento con ese ID, intenta buscar donde uid == currentUser.uid
+          const userDocs = await getDocs(
+            query(collection(db, 'users'), where('uid', '==', currentUser.uid))
+          );
+          
+          if (!userDocs.empty) {
+            const userData = userDocs.docs[0].data();
+            setIsFounder(userData.role === 'founder');
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error al verificar rol:', error);
+    }
+  };
+
+  const fetchPostAndCheckPermission = async () => {
     setLoading(true);
     try {
       const docRef = doc(db, 'posts', id);
@@ -59,6 +136,19 @@ const BlogEditor = () => {
 
       if (docSnap.exists()) {
         const postData = docSnap.data();
+        
+        // Verificar si el usuario tiene permiso para editar
+        const currentUser = auth.currentUser;
+        
+        // Solo permitir editar si es el autor o fundador
+        if (postData.authorId !== currentUser.uid && !isFounder) {
+          setError('No tienes permiso para editar esta publicación');
+          setTimeout(() => {
+            navigate('/admin/blog');
+          }, 2000);
+          return;
+        }
+        
         setPost(postData);
         // Actualizar el valor del input de etiquetas
         if (postData.tags && postData.tags.length > 0) {
@@ -148,7 +238,11 @@ const BlogEditor = () => {
       const postData = {
         ...post,
         coverImage: imageUrl,
-        updatedAt: serverTimestamp()
+        updatedAt: serverTimestamp(),
+        // Asegurar que se guarde el ID del autor
+        authorId: auth.currentUser.uid,
+        // Usar el nombre del autor del estado, que ya fue correctamente inicializado
+        author: post.author || 'Usuario'
       };
 
       if (isEditMode) {
@@ -335,8 +429,8 @@ const BlogEditor = () => {
                 id="author"
                 name="author"
                 value={post.author}
-                readOnly
-                className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100 focus:ring-primary focus:border-primary"
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
               />
             </div>
             <div>
