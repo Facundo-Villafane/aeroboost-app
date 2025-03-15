@@ -1,7 +1,7 @@
 # AeroBoost App [View](https://aeroboost.com.ar/)
 
 ![Estado del Proyecto](https://img.shields.io/badge/Estado-En%20Desarrollo-brightgreen)
-![Versión](https://img.shields.io/badge/Versión-1.0.0-blue)
+![Versión](https://img.shields.io/badge/Versión-1.2.0-blue)
 ![Licencia](https://img.shields.io/badge/Licencia-MIT-green)
 
 ## 📚 Descripción
