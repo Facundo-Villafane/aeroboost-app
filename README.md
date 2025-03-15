@@ -49,7 +49,7 @@ AeroBoost App es una plataforma web moderna diseñada para una institución educ
 
 ```bash
 # Clonar el repositorio
-git clone [https://github.com/tu-usuario/aeroboost-app.git](https://github.com/Facundo-Villafane/aeroboost-app.git)
+git clone https://github.com/Facundo-Villafane/aeroboost-app.git
 
 # Navegar al directorio del proyecto
 cd aeroboost-app
