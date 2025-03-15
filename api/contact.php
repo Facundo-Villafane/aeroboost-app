@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     // Configurar el destinatario del correo
-    $to = "info@aeroboost.com.ar"; // Cambia esto a tu dirección de correo
+    $to = "info@email.com"; // Cambia esto a tu dirección de correo
     
     // Configurar el asunto
     $subject = "Nuevo mensaje de contacto desde el sitio web";
