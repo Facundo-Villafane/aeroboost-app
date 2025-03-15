@@ -1,0 +1,12 @@
+# Archivo .htaccess para Hostinger - Colocar en la raíz del sitio
+
+# Habilitar el motor de reescritura
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  
+  # Si no es un archivo o directorio existente, redirigir a index.html
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>

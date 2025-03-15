@@ -1,0 +1,88 @@
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary: oklch(0.55 0.18 250); /* Aproximado a #0069A5 */
+  --color-secondary: oklch(0.98 0.005 95); /* Para #f8f9fa */
+  --color-dark-text: oklch(0.25 0.01 255); /* Para #2d3748 */
+  --color-light-text: oklch(0.45 0.01 255); /* Para #4a5568 */
+}
+
+/* Para mantener compatibilidad con los nombres de clase de Tailwind anteriores */
+@layer utilities {
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+  .text-primary {
+    color: var(--color-primary);
+  }
+  .border-primary {
+    border-color: var(--color-primary);
+  }
+  .hover\:bg-primary:hover {
+    background-color: var(--color-primary);
+  }
+  .focus\:border-primary:focus {
+    border-color: var(--color-primary);
+  }
+  /* Colores secundarios */
+  .bg-secondary {
+    background-color: var(--color-secondary);
+  }
+  .text-secondary {
+    color: var(--color-secondary);
+  }
+  /* Textos */
+  .text-darkText {
+    color: var(--color-dark-text);
+  }
+  .text-lightText {
+    color: var(--color-light-text);
+  }
+  /* Colores de azul usados en la aplicación */
+  .bg-blue-700 {
+    background-color: oklch(0.50 0.18 250);
+  }
+  .bg-blue-800 {
+    background-color: oklch(0.45 0.18 250);
+  }
+  .hover\:bg-blue-700:hover {
+    background-color: oklch(0.50 0.18 250);
+  }
+}
+
+/* Estilos globales */
+html, body {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Para móviles */
+@media (max-width: 640px) {
+  .container {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Asegúrate de que el footer siempre esté en la parte inferior */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
