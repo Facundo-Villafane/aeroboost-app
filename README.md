@@ -58,7 +58,7 @@ cd aeroboost-app
 npm install
 
 # Configurar variables de entorno
-# Crea un archivo .env basado en .env.example con tus credenciales de Firebase
+# Crea un archivo .env basado en .env.example con tus credenciales de Firebase y tu endpoint
 
 # Iniciar el servidor de desarrollo
 npm run dev
@@ -105,24 +105,27 @@ Para utilizar esta aplicación, necesitarás configurar un proyecto en Firebase:
 3. Crea un archivo `firebase.js` en la carpeta `/src/utils/` con tu configuración:
 
 ```javascript
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
 
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+
+// Tu configuración de Firebase 
 const firebaseConfig = {
-  apiKey: "tu-api-key",
-  authDomain: "tu-auth-domain",
-  projectId: "tu-project-id",
-  storageBucket: "tu-storage-bucket",
-  messagingSenderId: "tu-sender-id",
-  appId: "tu-app-id"
-};
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID
+};;
 
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 
-// Exportar servicios
+// Obtener las instancias de los servicios
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
@@ -170,10 +173,10 @@ La aplicación utiliza un script PHP para procesar el formulario de contacto. De
 ```
 /public_html (o carpeta raíz)
 ├── /api
-│   └── contact.php
+│   └── endpoint.php
 ```
 
-### Contenido de contact.php
+### Contenido de endpoint en PHP
 ```php
 <?php
 // Permitir solicitudes desde el origen de tu aplicación React
