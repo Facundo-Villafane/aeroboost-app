@@ -12,7 +12,6 @@
   "dependencies": {
     "@gravatar-com/quick-editor": "^0.7.0",
     "@tailwindcss/vite": "^4.0.13",
-    "@tinymce/tinymce-react": "^6.0.0",
     "firebase": "^11.4.0",
     "framer-motion": "^12.5.0",
     "md5": "^2.3.0",
