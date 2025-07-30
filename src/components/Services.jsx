@@ -1,117 +1,237 @@
-
 import { motion } from 'framer-motion';
 import { Link } from 'react-router';
-import clase1 from '../assets/clases1.jpg';
-import clase2 from '../assets/clases2.jpg';
-import clase3 from '../assets/clases3.jpg';
+import { FaCode, FaGamepad, FaMobile, FaGlobe, FaPalette, FaPython, FaArrowRight, FaGraduationCap, FaQuestionCircle, FaCubes } from 'react-icons/fa';
 
 const Services = () => {
   const services = [
     {
-      title: "Clases Particulares",
-      description: "Sesiones personalizadas con instructores especializados para reforzar materias específicas de tu carrera aeronáutica.",
-      image: clase3,
-      id: "clases-particulares"
+      title: "Roblox Studio para Principiantes",
+      description: "Crea tus propios mundos y videojuegos en Roblox usando Lua. Perfecto para niños de 8-12 años que quieren dar vida a su creatividad.",
+      icon: <FaCubes className="text-6xl text-secondary mb-4" />,
+      id: "roblox-principiantes",
+      ageRange: "8-12 años",
+      duration: "10 semanas",
+      level: "Principiante"
     },
     {
-      title: "Preparación para Exámenes",
-      description: "Programas intensivos de repaso y simulacros para ayudarte a superar con éxito tus evaluaciones oficiales.",
-      image: clase2,
-      id: "preparación-para-exámenes"
+      title: "Python para Niños y Jóvenes",
+      description: "Aprende Python desde cero, uno de los lenguajes más populares. Desde conceptos básicos hasta proyectos avanzados con inteligencia artificial.",
+      icon: <FaPython className="text-6xl text-secondary mb-4" />,
+      id: "python-completo",
+      ageRange: "8-17 años",
+      duration: "14 semanas",
+      level: "Principiante a Avanzado"
     },
     {
-      title: "Nivelación Académica",
-      description: "Sesiones enfocadas en cubrir brechas de conocimiento y fortalecer áreas específicas de tu formación aeronáutica.",
-      image: clase1,
-      id: "nivelación-académica"
+      title: "Desarrollo Web Juvenil",
+      description: "Crea sitios web increíbles con HTML, CSS y JavaScript. Aprende a diseñar y programar páginas web profesionales y responsivas.",
+      icon: <FaGlobe className="text-6xl text-secondary mb-4" />,
+      id: "desarrollo-web",
+      ageRange: "10-17 años",
+      duration: "16 semanas",
+      level: "Intermedio"
     }
   ];
 
-  const targetAreas = [
-    "Piloto Comercial",
-    "Tripulante de Cabina",
-    "Despachante de Aeronaves",
-    "Controlador de Tránsito Aéreo",
-    "Gestión Aeroportuaria",
+  const extraCourses = [
+    {
+      title: "Construct 3",
+      description: "Crea videojuegos sin programar usando Construct 3",
+      icon: <FaGamepad className="text-2xl text-secondary" />
+    },
+    {
+      title: "Videojuegos Móviles",
+      description: "Desarrolla juegos para Android e iOS",
+      icon: <FaMobile className="text-2xl text-secondary" />
+    },
+    {
+      title: "Game Design Avanzado",
+      description: "Diseña y crea videojuegos completos con Unity",
+      icon: <FaPalette className="text-2xl text-secondary" />
+    }
+  ];
+
+  const skillLevels = [
+    { name: "Exploradores", age: "8-10 años", bgColor: "bg-secondary-2/20", textColor: "text-primary", borderColor: "border-secondary-2" },
+    { name: "Creativos", age: "11-13 años", bgColor: "bg-primary/20", textColor: "text-primary", borderColor: "border-primary" },
+    { name: "Innovadores", age: "14-17 años", bgColor: "bg-accent/20", textColor: "text-accent", borderColor: "border-accent" }
   ];
 
   return (
-    <section className="py-16">
+    <section className="py-16 bg-outline">
       <div className="container mx-auto px-4">
         <motion.div 
-          className="text-center mb-12"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl font-bold text-darkText mb-2">Nuestros Servicios</h2>
-          <p className="text-lightText mb-4">Apoyo académico especializado para estudiantes de carreras aeronáuticas</p>
-          <p className="text-gray-600 max-w-3xl mx-auto">
-            En AeroBoost Learning Center nos enfocamos en ayudarte a superar los desafíos de tu formación
-            aeronáutica, ofreciendo servicios personalizados que complementan tu educación principal.
+          <h2 className="text-4xl font-bold text-complement mb-4 brand-font">
+            Nuestros Cursos
+          </h2>
+          <p className="text-xl text-secondary-2 mb-4">
+            Programas diseñados especialmente para cada edad
+          </p>
+          <p className="text-gray-300 max-w-3xl mx-auto">
+            Desde crear mundos en Roblox hasta el desarrollo de aplicaciones reales, 
+            tenemos el curso perfecto para cada joven programador
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Cursos principales */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {services.map((service, index) => (
             <motion.div 
               key={index}
-              className="bg-white rounded-lg overflow-hidden shadow-md h-full flex flex-col"
+              className="bg-complement rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-secondary flex flex-col h-full"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ y: -5 }}
             >
-              <img 
-                src={service.image} 
-                alt={service.title} 
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6 flex-grow">
-                <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                <p className="text-lightText mb-4">{service.description}</p>
-                <Link 
-                  to={`/servicios#${service.id}`}
-                  className="text-primary font-medium hover:underline mt-auto inline-block"
+              <div className="p-8 text-center flex flex-col flex-grow">
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="mb-4"
                 >
-                  Más información →
-                </Link>
+                  {service.icon}
+                </motion.div>
+                <h3 className="text-2xl font-bold text-primary mb-3">
+                  {service.title}
+                </h3>
+                <p className="text-lightText mb-6 leading-relaxed flex-grow">
+                  {service.description}
+                </p>
+                
+                {/* Información del curso */}
+                <div className="space-y-2 mb-6">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-primary">Edades:</span>
+                    <span className="px-3 py-1 bg-secondary/20 text-primary rounded-full text-sm font-semibold border border-secondary">
+                      {service.ageRange}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-primary">Duración:</span>
+                    <span className="text-sm text-outline">{service.duration}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-primary">Nivel:</span>
+                    <span className="text-sm text-outline">{service.level}</span>
+                  </div>
+                </div>
+                
+                {/* Botón siempre al final */}
+                <div className="mt-auto">
+                  <Link 
+                    to={`/servicios#${service.id}`}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-complement font-semibold rounded-full hover:bg-accent transition-all duration-300 transform hover:scale-105"
+                  >
+                    Ver Detalles <FaArrowRight />
+                  </Link>
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
         
+        {/* Niveles de habilidad */}
         <motion.div 
-          className="mt-16 bg-gray-50 p-8 rounded-lg shadow-sm"
+          className="mb-16"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <h3 className="text-2xl font-semibold text-center mb-6">Áreas que cubrimos</h3>
-          <p className="text-center text-gray-600 mb-8">
-            Ofrecemos apoyo académico para estudiantes de diversas carreras aeronáuticas:
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {targetAreas.map((area, index) => (
+          <h3 className="text-2xl font-bold text-center text-complement mb-8 brand-font">
+            Niveles de Aprendizaje
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {skillLevels.map((level, index) => (
               <div 
                 key={index} 
-                className="bg-white p-4 rounded-lg shadow-sm text-center border-l-4 border-primary"
+                className={`bg-complement p-6 rounded-xl shadow-md text-center border-l-4 ${level.borderColor}`}
               >
-                <h4 className="font-medium">{area}</h4>
+                <h4 className="font-bold text-lg text-primary mb-2">{level.name}</h4>
+                <span className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${level.bgColor} ${level.textColor} border ${level.borderColor}`}>
+                  {level.age}
+                </span>
               </div>
             ))}
           </div>
         </motion.div>
         
-        <div className="text-center mt-12">
-          <Link 
-            to="/servicios"
-            className="px-6 py-3 bg-primary text-white font-semibold rounded-md hover:bg-blue-700 transition-colors"
+        {/* Cursos adicionales */}
+        <motion.div 
+          className="bg-gradient-to-r from-primary to-primary p-8 rounded-2xl text-complement"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <FaCode className="text-2xl text-secondary" />
+            <h3 className="text-2xl font-bold brand-font">
+              También Ofrecemos
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {extraCourses.map((course, index) => (
+              <div 
+                key={index} 
+                className="bg-complement/10 p-6 rounded-xl backdrop-blur-sm hover:bg-complement/20 transition-all duration-300"
+              >
+                <div className="flex items-center mb-3">
+                  {course.icon}
+                  <h4 className="font-semibold ml-3 text-complement">{course.title}</h4>
+                </div>
+                <p className="text-sm text-complement/90">{course.description}</p>
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-center mt-8">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <FaQuestionCircle className="text-secondary" />
+              <p className="text-lg font-medium text-complement">
+                ¿No encuentras lo que buscas?
+              </p>
+            </div>
+            <Link 
+              to="/contacto"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-secondary text-outline font-semibold rounded-full hover:bg-accent hover:text-complement transition-all duration-300 transform hover:scale-105"
+            >
+              <FaGraduationCap />
+              Consulta por Cursos Personalizados
+            </Link>
+          </div>
+        </motion.div>
+        
+        {/* Call to action final */}
+        <div className="text-center mt-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.6 }}
           >
-            Ver todos nuestros servicios
-          </Link>
+            <h3 className="text-2xl font-bold text-complement mb-4 brand-font">
+              ¿Listo para empezar a programar?
+            </h3>
+            <p className="text-secondary-2 mb-6">
+              Únete a cientos de jóvenes que ya están creando el futuro
+            </p>
+            <Link 
+              to="/servicios"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-complement font-semibold rounded-full hover:bg-accent transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              <FaCode />
+              Ver Todos los Cursos
+            </Link>
+          </motion.div>
         </div>
       </div>
     </section>
