@@ -18,7 +18,7 @@ const Services = () => {
       description: "Aprende Python desde cero, uno de los lenguajes más populares. Desde conceptos básicos hasta proyectos avanzados con inteligencia artificial.",
       icon: <FaPython className="text-6xl text-secondary mb-4" />,
       id: "python-completo",
-      ageRange: "8-17 años",
+      ageRange: "10-17 años",
       duration: "14 semanas",
       level: "Principiante a Avanzado"
     },
@@ -27,7 +27,7 @@ const Services = () => {
       description: "Crea sitios web increíbles con HTML, CSS y JavaScript. Aprende a diseñar y programar páginas web profesionales y responsivas.",
       icon: <FaGlobe className="text-6xl text-secondary mb-4" />,
       id: "desarrollo-web",
-      ageRange: "10-17 años",
+      ageRange: "14-17 años",
       duration: "16 semanas",
       level: "Intermedio"
     }
@@ -49,12 +49,6 @@ const Services = () => {
       description: "Diseña y crea videojuegos completos con Unity",
       icon: <FaPalette className="text-2xl text-secondary" />
     }
-  ];
-
-  const skillLevels = [
-    { name: "Exploradores", age: "8-10 años", bgColor: "bg-secondary-2/20", textColor: "text-primary", borderColor: "border-secondary-2" },
-    { name: "Creativos", age: "11-13 años", bgColor: "bg-primary/20", textColor: "text-primary", borderColor: "border-primary" },
-    { name: "Innovadores", age: "14-17 años", bgColor: "bg-accent/20", textColor: "text-accent", borderColor: "border-accent" }
   ];
 
   return (
@@ -137,32 +131,6 @@ const Services = () => {
             </motion.div>
           ))}
         </div>
-        
-        {/* Niveles de habilidad */}
-        <motion.div 
-          className="mb-16"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <h3 className="text-2xl font-bold text-center text-complement mb-8 brand-font">
-            Niveles de Aprendizaje
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {skillLevels.map((level, index) => (
-              <div 
-                key={index} 
-                className={`bg-complement p-6 rounded-xl shadow-md text-center border-l-4 ${level.borderColor}`}
-              >
-                <h4 className="font-bold text-lg text-primary mb-2">{level.name}</h4>
-                <span className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${level.bgColor} ${level.textColor} border ${level.borderColor}`}>
-                  {level.age}
-                </span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
         
         {/* Cursos adicionales */}
         <motion.div 
