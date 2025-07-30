@@ -1,12 +1,12 @@
 # AeroBoost App [View](https://aeroboost.com.ar/)
 
 ![Estado del Proyecto](https://img.shields.io/badge/Estado-En%20Desarrollo-brightgreen)
-![Versión](https://img.shields.io/badge/Versión-1.0.0-blue)
+![Versión](https://img.shields.io/badge/Versión-1.2.0-blue)
 ![Licencia](https://img.shields.io/badge/Licencia-MIT-green)
 
 ## 📚 Descripción
 
-AeroBoost App es una plataforma web moderna diseñada para una institución educativa que brinda apoyo académico. La aplicación complementa un aula virtual en Moodle y sirve como punto central para promocionar servicios educativos, mientras proporciona contenido de valor a través de un sistema de blog gestionado por instructores certificados.
+AeroBoost App es una plataforma web moderna diseñada para una institución educativa que brinda apoyo académico. La aplicación complementa un aula virtual en Moodle y sirve como punto central para promocionar servicios educativos, mientras proporciona contenido de valor a través de un sistema de blog gestionado por instructores certificados y ofrece un completo sistema de gestión interna para servicios educativos.
 
 ## ✨ Características Principales
 
@@ -18,11 +18,14 @@ AeroBoost App es una plataforma web moderna diseñada para una institución educ
 - **Contacto**: Formulario para consultas y comunicación directa
 
 ### 👨‍💼 Panel de Administración
-- **Autenticación**: Sistema de login seguro para instructores y administradores
-- **Gestión de Usuarios**: Control de acceso y permisos (solo admin)
-- **Editor de Blog**: Interfaz para crear y editar contenido con editor Quill
-- **Gestión de Comentarios**: Moderación de comentarios de los artículos
-- **Gestión de Instructores**: Administración de perfiles de instructores
+- **Dashboard**: Panel principal con estadísticas y acceso rápido a todas las secciones
+- **Autenticación**: Sistema de login seguro con permisos basados en roles
+- **Gestión de Usuarios**: Control de acceso y administración de instructores
+- **Editor de Blog**: Interfaz completa para crear y editar contenido con editor Quill
+- **Gestión de Comentarios**: Moderación de comentarios en artículos
+- **Modelo Financiero**: Gestión de tarifas, servicios y rentabilidad
+- **Sistema de Solicitudes**: Asignación y seguimiento de servicios educativos
+- **Sistema de Pagos**: Control de honorarios y balances de instructores
 
 ## 🛠️ Tecnologías
 
@@ -38,8 +41,8 @@ AeroBoost App es una plataforma web moderna diseñada para una institución educ
 ### Backend y Servicios
 - **Firebase 11**: 
   - Autenticación de usuarios
-  - Base de datos en tiempo real
-  - Almacenamiento de archivos
+  - Firestore Database para almacenamiento estructurado
+  - Storage para archivos e imágenes
   
 ### Herramientas de Contenido
 - **Quill 2.0**: Editor de texto enriquecido para el blog
@@ -72,19 +75,34 @@ npm run dev
 │   ├── Auth.jsx        # Componente de autenticación
 │   ├── AuthProvider.jsx # Proveedor de contexto de autenticación
 │   ├── Dashboard.jsx   # Dashboard principal
+│   ├── DashboardHome.jsx # Inicio del dashboard con estadísticas
+│   ├── BlogManager.jsx # Gestión de publicaciones del blog
 │   ├── BlogEditor.jsx  # Editor de entradas del blog
+│   ├── CommentManager.jsx # Gestión de comentarios
+│   ├── InstructorManager.jsx # Administración de instructores
+│   ├── FinancialModel.jsx # Modelo financiero para servicios
+│   ├── ServiceRequestsSystem.jsx # Sistema de solicitudes
+│   ├── FounderPaymentPanel.jsx # Panel de pagos a instructores
+│   ├── InstructorServicesPanel.jsx # Panel de servicios para instructores
 │   └── ...
 ├── /components         # Componentes reutilizables
 │   ├── Header.jsx      # Encabezado del sitio
 │   ├── Footer.jsx      # Pie de página
+│   ├── QuillEditor.jsx # Componente de editor de texto
 │   └── ...
 ├── /pages              # Páginas principales del sitio
 │   ├── Home.jsx        # Página de inicio
 │   ├── ServicesPage.jsx # Página de servicios
 │   ├── BlogPage.jsx    # Página del blog
+│   ├── BlogPostPage.jsx # Página de artículo individual
+│   ├── AboutPage.jsx   # Página de información institucional
+│   ├── ContactPage.jsx # Página de contacto
 │   └── ...
 ├── /styles             # Estilos adicionales
 ├── /utils              # Utilidades y helpers
+│   ├── firebase.js     # Configuración de Firebase
+│   ├── gravatar.js     # Utilidades para Gravatar
+│   └── ...
 ├── App.jsx             # Componente principal de la aplicación
 └── main.jsx            # Punto de entrada
 ```
@@ -105,7 +123,6 @@ Para utilizar esta aplicación, necesitarás configurar un proyecto en Firebase:
 3. Crea un archivo `firebase.js` en la carpeta `/src/utils/` con tu configuración:
 
 ```javascript
-
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
@@ -120,7 +137,7 @@ const firebaseConfig = {
     storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
     appId: import.meta.env.VITE_FIREBASE_APP_ID
-};;
+};
 
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
@@ -135,8 +152,8 @@ export default app;
 
 ## 👥 Roles de Usuario
 
-- **Administrador**: Acceso completo al dashboard, puede crear usuarios y gestionar todos los aspectos del sitio
-- **Instructor**: Puede crear y editar entradas del blog, moderar comentarios en sus propias publicaciones
+- **Fundador (founder)**: Acceso completo al dashboard, gestión de instructores, modelo financiero y todas las funciones administrativas.
+- **Instructor**: Puede crear y editar sus propias entradas del blog, ver solicitudes de servicio, acceder a información del equipo y utilizar las herramientas educativas.
 
 ## 📝 Características del Blog
 
@@ -145,6 +162,22 @@ export default app;
 - Búsqueda avanzada para encontrar artículos específicos
 - Sistema de comentarios moderados
 - Perfiles de autor con Gravatar
+- Permisos de edición: solo el autor original o un fundador puede modificar publicaciones
+
+## 💰 Sistema Financiero
+
+- **Modelo de tarifas**: Configuración de tarifas base, bonificaciones por alumno adicional y descuentos por volumen
+- **Gestión de servicios**: Catálogo completo de servicios con cálculo automático de rentabilidad
+- **Solicitudes de servicio**: Sistema para crear, asignar y seguir solicitudes de clases
+- **Panel de pagos**: Control de honorarios pendientes para instructores
+- **Balance de instructores**: Cada instructor puede ver su balance actual y servicios completados
+
+## 👨‍🏫 Gestión de Instructores
+
+- Perfiles completos con especialidad, experiencia y foto
+- Asignación de roles y permisos
+- Visualización del equipo docente para todos los usuarios
+- Administración exclusiva para fundadores
 
 ## 🌐 SEO y Metadatos
 
