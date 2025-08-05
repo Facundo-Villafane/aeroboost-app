@@ -247,41 +247,49 @@ const BlogPage = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gray-50">
       <Helmet>
-        <title>{selectedTag ? `${selectedTag} | Blog AeroBoost` : `Blog de Aviación | AeroBoost Learning Center`}</title>
+        <title>{selectedTag ? `${selectedTag} | Blog CODISEA` : `Blog de Programación | CODISEA`}</title>
         <meta 
           name="description" 
           content={selectedTag 
-            ? `Artículos sobre ${selectedTag} en el mundo aeronáutico. Las últimas noticias y tendencias para profesionales y estudiantes de aviación.` 
-            : `Mantente actualizado con las últimas noticias y artículos sobre la industria aeronáutica. Blog especializado para estudiantes y profesionales de la aviación.`
+            ? `Artículos sobre ${selectedTag} en programación y tecnología. Contenido educativo para estudiantes de programación.` 
+            : `Mantente actualizado con las últimas noticias y artículos sobre programación y tecnología. Blog especializado para estudiantes y profesionales.`
           } 
         />
         <meta 
           name="keywords" 
-          content={`blog aviación, formación aeronáutica, noticias sector aeronáutico${selectedTag ? `, ${selectedTag}` : ''}`}
+          content={`blog programación, educación tecnológica, noticias tech${selectedTag ? `, ${selectedTag}` : ''}`}
         />
       </Helmet>
-      <div className="text-center mb-12">
-      <h1 className="text-4xl font-bold text-gray-900 mb-4">Nuestro Blog</h1>
-      <p className="text-xl text-gray-600">
-        Mantente actualizado con las últimas noticias y artículos sobre la industria aeronáutica
-      </p>
-    </div>
+
+      {/* Hero Section */}
+      <div className="bg-primary text-white py-20 px-4">
+        <div className="container mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Nuestro Blog</h1>
+          <p className="text-xl max-w-2xl">
+            Descubre artículos, tutoriales y noticias sobre programación y tecnología
+          </p>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-16">
     
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div className="lg:col-span-2">
         {selectedTag && (
-          <div className="mb-6 flex items-center">
-            <span className="mr-2">Filtrando por:</span>
-            <div className="bg-primary text-white rounded-full px-3 py-1 flex items-center">
-              <span>{selectedTag}</span>
-              <button 
-                onClick={clearTagFilter}
-                className="ml-2 text-white hover:text-gray-200"
-              >
-                &times;
-              </button>
+          <div className="mb-6 bg-white rounded-2xl shadow-lg p-4">
+            <div className="flex items-center">
+              <span className="mr-2 text-gray-700">Filtrando por:</span>
+              <div className="bg-primary text-white rounded-full px-4 py-2 flex items-center">
+                <span>{selectedTag}</span>
+                <button 
+                  onClick={clearTagFilter}
+                  className="ml-2 text-white hover:text-gray-200 text-xl leading-none"
+                >
+                  &times;
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -291,11 +299,11 @@ const BlogPage = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
           </div>
         ) : posts.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg shadow">
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">
+          <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
+            <h3 className="text-2xl font-semibold text-gray-700 mb-4">
               {searchTerm ? `No hay resultados para "${searchTerm}"` : 'Aún no hay publicaciones'}
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 mb-6">
               {selectedTag 
                 ? `No hay publicaciones con la etiqueta "${selectedTag}".` 
                 : searchTerm 
@@ -309,16 +317,16 @@ const BlogPage = () => {
                   clearTagFilter();
                   fetchPosts();
                 }}
-                className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700 transition-colors"
+                className="px-6 py-3 bg-primary text-white rounded-full hover:bg-accent transition-colors font-semibold"
               >
                 Ver todas las publicaciones
               </button>
             )}
           </div>
         ) : (
-            <div className="space-y-8">
+            <div className="space-y-6">
               {posts.map(post => (
-                <article key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                <article key={post.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                   <div className="md:flex">
                     {post.coverImage && (
                       <div className="md:flex-shrink-0">
@@ -330,30 +338,30 @@ const BlogPage = () => {
                       </div>
                     )}
                     <div className="p-6">
-                      <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-                        <Link to={`/blog/${post.id}`} className="hover:text-primary">
+                      <h2 className="text-2xl font-bold text-primary mb-3">
+                        <Link to={`/blog/${post.id}`} className="hover:text-accent transition-colors">
                           {post.title}
                         </Link>
                       </h2>
                       
-                      <div className="flex flex-wrap items-center text-sm text-gray-600 mb-3">
-                        <div className="flex items-center mr-4 mb-1">
-                          <FaCalendarAlt className="mr-1" />
+                      <div className="flex flex-wrap items-center text-sm text-gray-600 mb-4">
+                        <div className="flex items-center mr-4 mb-2">
+                          <FaCalendarAlt className="mr-2 text-secondary" />
                           <span>{formatDate(post.date)}</span>
                         </div>
                         
-                        <div className="flex items-center mr-4 mb-1">
-                          <FaUser className="mr-1" />
+                        <div className="flex items-center mr-4 mb-2">
+                          <FaUser className="mr-2 text-secondary" />
                           <span>{post.author}</span>
                         </div>
                         
-                        <div className="flex items-center mb-1">
-                          <FaEye className="mr-1" />
+                        <div className="flex items-center mb-2">
+                          <FaEye className="mr-2 text-secondary" />
                           <span>{post.views || 0} lecturas</span>
                         </div>
                       </div>
                       
-                      <p className="text-gray-700 mb-4">
+                      <p className="text-gray-700 mb-4 leading-relaxed">
                         {post.excerpt}
                       </p>
                       
@@ -363,7 +371,7 @@ const BlogPage = () => {
                             <Link 
                               key={tag} 
                               to={`/blog?tag=${tag}`}
-                              className="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded mr-2 mb-1 hover:bg-gray-300 transition-colors"
+                              className="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full mr-2 mb-2 hover:bg-secondary hover:text-white transition-colors"
                             >
                               <FaTag className="inline mr-1" />
                               {tag}
@@ -374,9 +382,9 @@ const BlogPage = () => {
                       
                       <Link 
                         to={`/blog/${post.id}`}
-                        className="inline-block text-primary font-medium hover:underline"
+                        className="inline-flex items-center px-4 py-2 bg-primary text-white font-semibold rounded-full hover:bg-accent transition-colors"
                       >
-                        Leer más →
+                        Leer más
                       </Link>
                     </div>
                   </div>
@@ -388,7 +396,7 @@ const BlogPage = () => {
                   <button 
                     onClick={loadMorePosts}
                     disabled={loading}
-                    className="px-6 py-3 bg-primary text-white font-semibold rounded-md hover:bg-blue-700 transition-colors disabled:opacity-70"
+                    className="px-8 py-3 bg-primary text-white font-semibold rounded-full hover:bg-accent transition-colors disabled:opacity-70"
                   >
                     {loading ? 'Cargando...' : 'Cargar más artículos'}
                   </button>
@@ -398,21 +406,22 @@ const BlogPage = () => {
           )}
         </div>
         
-        <div className="lg:col-span-1">
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h3 className="text-xl font-semibold mb-4">Buscar</h3>
+        <div className="lg:col-span-1 space-y-6">
+          {/* Búsqueda */}
+          <div className="bg-white rounded-2xl shadow-lg p-6">
+            <h3 className="text-xl font-bold text-primary mb-4">Buscar</h3>
             <form onSubmit={handleSearch}>
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Buscar artículos..."
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <button
                   type="submit"
-                  className="absolute right-0 top-0 h-full px-4 text-gray-600 hover:text-gray-900"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 px-3 py-1 bg-primary text-white rounded-full hover:bg-accent transition-colors"
                 >
                   <FaSearch />
                 </button>
@@ -422,9 +431,9 @@ const BlogPage = () => {
                   type="button"
                   onClick={() => {
                     setSearchTerm('');
-                    fetchPosts(); // Vuelve a cargar todos los posts
+                    fetchPosts();
                   }}
-                  className="mt-2 text-sm text-primary hover:underline"
+                  className="mt-3 text-sm text-primary hover:underline"
                 >
                   Limpiar búsqueda
                 </button>
@@ -432,10 +441,11 @@ const BlogPage = () => {
             </form>
           </div>
           
+          {/* Etiquetas */}
           {allTags.length > 0 && (
-            <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-              <h3 className="text-xl font-semibold mb-4">Etiquetas</h3>
-              <div className="flex flex-wrap">
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <h3 className="text-xl font-bold text-primary mb-4">Etiquetas</h3>
+              <div className="flex flex-wrap gap-2">
                 {allTags.map(tag => (
                   <Link 
                     key={tag}
@@ -443,8 +453,8 @@ const BlogPage = () => {
                     className={`${
                       selectedTag === tag 
                         ? 'bg-primary text-white' 
-                        : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                    } text-sm px-3 py-1 rounded mr-2 mb-2 transition-colors`}
+                        : 'bg-gray-100 text-gray-700 hover:bg-secondary hover:text-white'
+                    } text-sm px-3 py-2 rounded-full transition-colors font-medium`}
                   >
                     {tag}
                   </Link>
@@ -453,26 +463,27 @@ const BlogPage = () => {
             </div>
           )}
           
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-semibold mb-4">Suscríbete</h3>
-            <p className="text-gray-600 mb-4">
-              Recibe las últimas noticias y actualizaciones directamente en tu correo.
+          {/* Suscripción */}
+          <div className="bg-gradient-to-br from-primary to-accent text-white rounded-2xl shadow-lg p-6">
+            <h3 className="text-xl font-bold mb-4">¡Suscríbete!</h3>
+            <p className="mb-4 opacity-90">
+              Recibe los últimos artículos y tutoriales directamente en tu correo.
             </p>
             
             {subscriptionStatus === 'success' && (
-              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+              <div className="bg-green-500 bg-opacity-20 border border-green-300 text-white px-4 py-3 rounded-lg mb-4">
                 ¡Te has suscrito correctamente! Gracias por ser parte de nuestra comunidad.
               </div>
             )}
             
             {subscriptionStatus === 'existing' && (
-              <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
+              <div className="bg-yellow-500 bg-opacity-20 border border-yellow-300 text-white px-4 py-3 rounded-lg mb-4">
                 Este correo ya está suscrito a nuestro newsletter.
               </div>
             )}
             
             {subscriptionStatus === 'error' && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              <div className="bg-red-500 bg-opacity-20 border border-red-300 text-white px-4 py-3 rounded-lg mb-4">
                 Ha ocurrido un error. Por favor, inténtalo de nuevo.
               </div>
             )}
@@ -481,7 +492,7 @@ const BlogPage = () => {
               <input
                 type="email"
                 placeholder="Tu correo electrónico"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+                className="w-full px-4 py-3 text-gray-900 rounded-full border-2 border-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -489,11 +500,11 @@ const BlogPage = () => {
               <button
                 type="submit"
                 disabled={isSubscribing}
-                className="w-full px-4 py-2 bg-primary text-white font-medium rounded-md hover:bg-blue-700 transition-colors disabled:opacity-70 flex items-center justify-center"
+                className="w-full px-4 py-3 bg-secondary text-primary font-bold rounded-full hover:bg-yellow-400 transition-colors disabled:opacity-70 flex items-center justify-center"
               >
                 {isSubscribing ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary mr-2"></div>
                     Procesando...
                   </>
                 ) : (
@@ -505,6 +516,7 @@ const BlogPage = () => {
         </div>
       </div>
     </div>
+  </div>
   );
 };
 

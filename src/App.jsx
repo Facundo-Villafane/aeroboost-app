@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
 import { AuthProvider } from './admin/AuthProvider';
+import { CartProvider } from './contexts/CartContext';
 
 // Componentes de layout
 import Header from './components/Header';
@@ -13,6 +14,13 @@ import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
 import ContactPage from './pages/ContactPage';
 
+// Páginas de estudiante
+import StudentDashboard from './pages/StudentDashboard';
+import StudentProfile from './pages/StudentProfile';
+import StudentLogin from './pages/StudentLogin';
+import StudentLayout from './components/StudentLayout';
+import StudentProtectedRoute from './components/StudentProtectedRoute';
+
 // Componentes de Administración
 import Auth from './admin/Auth';
 import Dashboard from './admin/Dashboard';
@@ -23,6 +31,9 @@ import CommentManager from './admin/CommentManager';
 import ProtectedRoute from './admin/ProtectedRoute';
 import InstructorManager from './admin/InstructorManager';
 import InstructorEditor from './admin/InstructorEditor';
+import CourseManager from './admin/CourseManager';
+import CourseEditor from './admin/CourseEditor';
+import StudentManager from './admin/StudentManager';
 
 // Nuevos componentes del sistema financiero
 import FinancialModel from './admin/FinancialModel';
@@ -45,7 +56,8 @@ const MainLayout = ({ children }) => {
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <CartProvider>
+        <Router>
         <Routes>
           {/* Rutas públicas del sitio */}
           <Route path="/" element={
@@ -79,6 +91,22 @@ function App() {
             </MainLayout>
           } />
           
+          {/* Rutas de estudiante */}
+          <Route path="/student/login" element={<StudentLogin />} />
+          <Route path="/student/dashboard" element={
+            <StudentProtectedRoute>
+              <StudentLayout>
+                <StudentDashboard />
+              </StudentLayout>
+            </StudentProtectedRoute>
+          } />
+          <Route path="/student/profile" element={
+            <StudentProtectedRoute>
+              <StudentLayout>
+                <StudentProfile />
+              </StudentLayout>
+            </StudentProtectedRoute>
+          } />
           
           {/* Rutas de administración */}
           <Route path="/admin/login" element={<Auth />} />
@@ -97,6 +125,14 @@ function App() {
             <Route path="instructors" element={<InstructorManager />} />
             <Route path="instructors/new" element={<InstructorEditor />} />
             <Route path="instructors/edit/:id" element={<InstructorEditor />} />
+            
+            {/* Rutas de gestión de cursos */}
+            <Route path="courses" element={<CourseManager />} />
+            <Route path="courses/new" element={<CourseEditor />} />
+            <Route path="courses/edit/:courseId" element={<CourseEditor />} />
+            
+            {/* Rutas de gestión de estudiantes */}
+            <Route path="students" element={<StudentManager />} />
             
             {/* Nuevas rutas para el sistema financiero */}
             <Route path="financials" element={<FinancialModel />} />
@@ -121,7 +157,8 @@ function App() {
             </MainLayout>
           } />
         </Routes>
-      </Router>
+        </Router>
+      </CartProvider>
     </AuthProvider>
   );
 }

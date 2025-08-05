@@ -4,25 +4,62 @@ import { FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="bg-darkText text-white mt-auto w-full">
+    <footer className="bg-gray-900 text-white mt-auto w-full">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo y descripción */}
           <div>
-            <div className="flex items-center mb-4">
-              <div className="bg-gradient-to-r from-secondary to-complementary p-2 rounded-lg mr-3">
-                <FaCode className="text-darkText text-2xl" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold">
-                  <span className="text-secondary">COD</span>
-                  <span className="text-white">I</span>
-                  <span className="text-complementary">SEA</span>
-                </h2>
-              </div>
+          <div className="flex items-center mb-2">
+            {/* Isotipo SVG oficial de CODISEA */}
+            <div className="mr-3 group-hover:scale-110 transition-transform duration-300">
+              <svg 
+                id="Capa_2" 
+                data-name="Capa 2" 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 135.32 138.6"
+                width="40"
+                height="40"
+                className="drop-shadow-md"
+              >
+                <defs>
+                  <style>
+                    {`
+                      .cls-1 {
+                        fill: #9eeffe;
+                      }
+                      .cls-2 {
+                        fill: #feb521;
+                      }
+                      .cls-3 {
+                        fill: #013e7f;
+                      }
+                    `}
+                  </style>
+                </defs>
+                <g id="Capa_1-2" data-name="Capa 1">
+                  <path className="cls-2" d="M67.22,6.94c.32-.07.84,0,1.04.29.29.41.62,2.45.74,3.07,1.1,5.87,1.3,12.04,2.09,17.97,1.01,7.52,2.41,18.74,6.53,25.09,7.9,12.17,27.37,11.4,40.03,14.42.7.17,2.04.36,2.39,1.03.69,1.32-1.4,1.68-2.27,1.89-16.2,3.98-36.97,1.63-43.06,21.17-2.95,9.46-3.55,20.54-4.66,30.38-.24,2.16-.67,7.14-1.46,8.95-.25.57-.8.66-1.37.48-.53-.16-.82-2.18-.94-2.75-1.18-5.9-1.32-12.23-2.09-18.23-.97-7.51-2.32-18.67-6.28-25.09-7.77-12.59-27.47-11.77-40.29-14.93-.85-.21-3.72-.88-1.77-2.02,1.14-.67,5.53-1.27,7.07-1.56,14.8-2.74,32.03-2.82,37.5-19.75,3.15-9.73,3.64-21.48,4.79-31.65.24-2.1.6-6.24,1.3-8.09.14-.36.28-.59.68-.69Z"/>
+                  <path className="cls-3" d="M86.94,138.58c-.46.02-.93-.01-1.4,0-1.47.03-2.97.02-4.44,0-.51,0-1.02.01-1.52,0-1.27-.03-2.53-.15-3.81-.13l1.51-8.96c.24-.3,1.77-.42,2.22-.44,4.8-.2,7.94,1.16,12.64-1.33,4.17-2.21,6.14-5.8,8.48-9.68,2.42-4.03,4.73-8.16,7.03-12.27,5.33-9.53,11.03-19.55,15.91-29.29.85-1.7,2.61-5.48,2.59-7.29-.03-2.1-2.01-5.98-3.01-7.91-5.15-9.96-10.84-20.08-16.37-29.84-2.37-4.19-4.79-8.52-7.33-12.6-2.25-3.6-4.26-6.54-8.3-8.33-4.54-2.01-7.83-.65-12.38-.94-.45-.03-1.5-.09-1.71-.44l-1.52-8.96c7.24,0,14.67-1.13,21.28,2.52,7.25,4,9.62,10.09,13.47,16.87,4.61,8.12,9.34,16.18,13.88,24.34,3.36,6.03,10.68,17.84,11.15,24.4.49,6.79-6.79,18.57-10.14,24.66-4.65,8.46-9.52,16.81-14.26,25.23-3.64,6.46-6,12.58-12.45,16.88-3.49,2.32-7.34,3.34-11.52,3.53Z"/>
+                  <path className="cls-3" d="M48.48,138.58c-7.79-.34-13.76-3.86-18.25-10.12-8.24-15.39-17.69-30.33-25.6-45.88-1.75-3.43-4.63-9.31-4.63-13.15,0-4.05,3.16-10.28,5.01-13.91,5.28-10.35,11.29-20.5,16.97-30.64C28.11,13.93,32.18,1.74,46.64.29c1.48-.15,2.96-.06,4.44-.26l8.32.26-1.47,8.88c-.14.22-.42.31-.66.36-3.11.55-6.54-.39-9.73.04-4.73.64-8.27,3.76-10.79,7.61-4.72,7.19-9.03,15.67-13.17,23.27-3.77,6.93-7.63,13.89-11.21,20.91-.98,1.91-3.08,6.01-3.08,8.07,0,1.93,1.91,5.76,2.83,7.56,5.12,10.06,10.88,20.32,16.42,30.18,2.21,3.94,4.43,7.90,6.77,11.76,2.6,4.28,5.17,8.24,10.29,9.77,3.73,1.12,6.67.19,10.32.34.44.02,2.01.15,2.23.44l1.51,8.96c-1.27-.02-2.54.1-3.81.13-.51.01-1.02,0-1.52,0-1.6.02-3.22.04-4.82,0-.34,0-.68.01-1.02,0Z"/>
+                  <path className="cls-1" d="M115.23,59.07c-.18.27-2.17.05-2.59.01-1.61-.17-6.38-1.07-7.37-2.28l-17.9-32.12c-.9-1.09-2.25-1.8-3.67-1.92-1.04-.08-3.45.35-4.17-.02-.46-.24-.61-1.06-.74-1.54-.2-.72-1.22-5.95-1-6.18.48-.11,1.02.12,1.45.11,5.52-.09,9.41-1.4,13.4,3.51,7.11,12.65,14.56,25.17,21.47,37.94.21.38,1.31,2.2,1.11,2.49Z"/>
+                  <path className="cls-1" d="M57.49,123.59c-2.77-.16-5.56.31-8.32.13-3.37-.22-5.88-2.52-7.57-5.25-7.39-12-13.5-25.23-20.81-37.33-.24-.6-.75-1.04-.61-1.74,1.84-.08,3.67.18,5.46.57,1.12.25,3.72.9,4.44,1.78l17.71,32.06c2,2.7,4.25,1.87,7.06,1.95.49.01.97.11,1.22.55.39.69.81,3.32.97,4.23.17,1.01.31,2.03.44,3.05Z"/>
+                  <path className="cls-1" d="M115.24,79.4l-.1.73c-7.62,13.42-14.78,27.14-22.75,40.35-1.63,1.72-3.72,3.09-6.15,3.25-2.76.18-5.55-.3-8.32-.13.22-1.87.49-3.78.93-5.61.32-1.33.21-2.2,1.8-2.24,2.68-.06,5.09.71,6.97-1.94l17.71-32.06c1.37-1.66,7.75-2.45,9.9-2.35Z"/>
+                  <path className="cls-1" d="M57.24,15.15c.17.17-.55,4.14-.67,4.73-.14.65-.46,2.66-1.01,2.93-.69.34-1.19.09-1.8.09-2.14,0-4.11-.16-5.71,1.54-6.16,10.75-11.96,21.72-17.97,32.56-.78.99-3.25,1.61-4.47,1.88-.88.20-4.86.92-5.44.54-.19-.13-.11-.28-.07-.45.12-.45.91-1.72,1.19-2.24,6.9-12.84,14.16-25.54,21.35-38.20,1.73-1.93,3.87-3.33,6.53-3.50s5.39.31,8.07.13Z"/>
+                </g>
+              </svg>
             </div>
-            <p className="text-gray-400 mb-4 leading-relaxed">
-              Formando los programadores del futuro. Enseñamos a niños y jóvenes 
+            
+            {/* Texto CODISEA */}
+            <div>
+              <h1 className="text-2xl font-bold text-complement brand-font tracking-wide">
+                CODISEA
+              </h1>
+              <p className="text-xs text-white leading-none font-medium">
+                Programación para Jóvenes
+              </p>
+            </div>
+          </div>
+            <p className="text-gray-300 mb-4 leading-relaxed">
+              Formando los programadores del futuro. Enseñamos a estudiantes de todas las edades 
               a crear, innovar y transformar el mundo a través del código.
             </p>
             <div className="flex space-x-3">
@@ -30,7 +67,7 @@ const Footer = () => {
                 href="https://facebook.com/codisea" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-complementary transition-colors duration-300 p-2 bg-white/10 rounded-lg hover:bg-secondary/20"
+                className="text-gray-300 hover:text-secondary transition-colors duration-300 p-2 bg-white/10 rounded-lg hover:bg-secondary/20"
               >
                 <FaFacebook size={20} />
               </a>
@@ -38,7 +75,7 @@ const Footer = () => {
                 href="https://instagram.com/codisea" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-complementary transition-colors duration-300 p-2 bg-white/10 rounded-lg hover:bg-secondary/20"
+                className="text-gray-300 hover:text-secondary transition-colors duration-300 p-2 bg-white/10 rounded-lg hover:bg-secondary/20"
               >
                 <FaInstagram size={20} />
               </a>
@@ -46,7 +83,7 @@ const Footer = () => {
                 href="https://linkedin.com/company/codisea" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-complementary transition-colors duration-300 p-2 bg-white/10 rounded-lg hover:bg-secondary/20"
+                className="text-gray-300 hover:text-secondary transition-colors duration-300 p-2 bg-white/10 rounded-lg hover:bg-secondary/20"
               >
                 <FaLinkedin size={20} />
               </a>
@@ -54,7 +91,7 @@ const Footer = () => {
                 href="https://youtube.com/codisea" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-complementary transition-colors duration-300 p-2 bg-white/10 rounded-lg hover:bg-secondary/20"
+                className="text-gray-300 hover:text-secondary transition-colors duration-300 p-2 bg-white/10 rounded-lg hover:bg-secondary/20"
               >
                 <FaYoutube size={20} />
               </a>
@@ -68,7 +105,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/" 
-                  className="text-gray-400 hover:text-complementary transition-colors duration-300 hover:translate-x-1 transform inline-block"
+                  className="text-gray-300 hover:text-secondary transition-colors duration-300 hover:translate-x-1 transform block"
                 >
                   Inicio
                 </Link>
@@ -76,7 +113,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/servicios" 
-                  className="text-gray-400 hover:text-complementary transition-colors duration-300 hover:translate-x-1 transform inline-block"
+                  className="text-gray-300 hover:text-secondary transition-colors duration-300 hover:translate-x-1 transform block"
                 >
                   Cursos
                 </Link>
@@ -84,7 +121,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/sobre-nosotros" 
-                  className="text-gray-400 hover:text-complementary transition-colors duration-300 hover:translate-x-1 transform inline-block"
+                  className="text-gray-300 hover:text-secondary transition-colors duration-300 hover:translate-x-1 transform block"
                 >
                   Sobre Nosotros
                 </Link>
@@ -92,7 +129,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/blog" 
-                  className="text-gray-400 hover:text-complementary transition-colors duration-300 hover:translate-x-1 transform inline-block"
+                  className="text-gray-300 hover:text-secondary transition-colors duration-300 hover:translate-x-1 transform block"
                 >
                   Blog
                 </Link>
@@ -100,7 +137,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/contacto" 
-                  className="text-gray-400 hover:text-complementary transition-colors duration-300 hover:translate-x-1 transform inline-block"
+                  className="text-gray-300 hover:text-secondary transition-colors duration-300 hover:translate-x-1 transform block"
                 >
                   Contacto
                 </Link>
@@ -110,43 +147,43 @@ const Footer = () => {
 
           {/* Cursos destacados */}
           <div>
-            <h3 className="text-xl font-semibold mb-4 text-complementary">Cursos Populares</h3>
+            <h3 className="text-xl font-semibold mb-4 text-secondary">Cursos Populares</h3>
             <ul className="space-y-2">
               <li>
                 <Link 
-                  to="/servicios#scratch-principiantes" 
-                  className="text-gray-400 hover:text-complementary transition-colors duration-300 hover:translate-x-1 transform inline-block flex items-center gap-1"
+                  to="/servicios#roblox-principiantes" 
+                  className="text-gray-300 hover:text-secondary transition-colors duration-300 hover:translate-x-1 transform flex items-center gap-1"
                 >
-                  <FaGamepad className="text-secondary" />
-                  Scratch para Principiantes
+                  <FaGamepad className="text-secondary text-sm" />
+                  Roblox para Principiantes
                 </Link>
               </li>
               <li>
                 <Link 
-                  to="/servicios#python-jovenes" 
-                  className="text-gray-400 hover:text-complementary transition-colors duration-300 hover:translate-x-1 transform inline-block flex items-center gap-1"
+                  to="/servicios#python-completo" 
+                  className="text-gray-300 hover:text-secondary transition-colors duration-300 hover:translate-x-1 transform flex items-center gap-1"
                 >
-                  <FaPython className="text-secondary" />
-                  Python para Jóvenes
+                  <FaPython className="text-secondary text-sm" />
+                  Python Completo
                 </Link>
               </li>
               <li>
                 <Link 
                   to="/servicios#desarrollo-web" 
-                  className="text-gray-400 hover:text-complementary transition-colors duration-300 hover:translate-x-1 transform inline-block flex items-center gap-1"
+                  className="text-gray-300 hover:text-secondary transition-colors duration-300 hover:translate-x-1 transform flex items-center gap-1"
                 >
-                  <FaGlobe className="text-secondary" />
+                  <FaGlobe className="text-secondary text-sm" />
                   Desarrollo Web
                 </Link>
               </li>
               <li>
-                <a 
-                  href="/servicios" 
-                  className="text-gray-400 hover:text-complementary transition-colors duration-300 hover:translate-x-1 transform inline-block flex items-center gap-1"
+                <Link 
+                  to="/servicios" 
+                  className="text-gray-300 hover:text-secondary transition-colors duration-300 hover:translate-x-1 transform flex items-center gap-1"
                 >
-                  <FaRobot className="text-secondary" />
-                  Robótica y Arduino
-                </a>
+                  <FaRobot className="text-secondary text-sm" />
+                  Inteligencia Artificial para Principiantes
+                </Link>
               </li>
             </ul>
           </div>
@@ -155,52 +192,89 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-semibold mb-4 text-secondary">Contacto</h3>
             <div className="space-y-3">
-              <p className="text-gray-400">
-                📧 <a href="mailto:info@codisea.com" className="hover:text-white transition-colors">info@codisea.com</a>
-              </p>
-              <p className="text-gray-400">
-                📱 <a href="tel:+541123456789" className="hover:text-white transition-colors">+54 11 2345-6789</a>
-              </p>
-              <p className="text-gray-400">
-                🕒 Lunes a Viernes: 9:00 - 18:00
-              </p>
-              <p className="text-gray-400">
-                🕒 Sábados: 9:00 - 13:00
-              </p>
+              <div className="flex items-center gap-3">
+                <FaEnvelope className="text-secondary text-sm" />
+                <a 
+                  href="mailto:hola@codisea.dev" 
+                  className="text-gray-300 hover:text-secondary transition-colors duration-300"
+                >
+                  hola@codisea.dev
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <FaPhone className="text-secondary text-sm" />
+                <a 
+                  href="tel:+5491123456789" 
+                  className="text-gray-300 hover:text-secondary transition-colors duration-300"
+                >
+                  +54 9 11 2345-6789
+                </a>
+              </div>
+              <div className="flex items-start gap-3">
+                <FaClock className="text-secondary text-sm mt-1" />
+                <div className="text-gray-300">
+                  <div className="font-medium">Horarios de atención:</div>
+                  <div className="text-sm">Lun - Vie: 9:00 - 18:00</div>
+                  <div className="text-sm">Sáb: 10:00 - 14:00</div>
+                </div>
+              </div>
             </div>
-            
-            {/* Botón CTA */}
+
+            {/* Botón de acceso al aula */}
             <div className="mt-6">
-              <Link 
-                to="/contacto"
-                className="inline-block px-6 py-3 bg-gradient-to-r from-secondary to-complementary text-darkText font-semibold rounded-full hover:from-yellow-500 hover:to-cyan-400 transition-all duration-300 transform hover:scale-105"
+              <a 
+                href="https://aula.codisea.dev/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-secondary text-outline font-semibold rounded-full hover:bg-accent hover:text-white transition-all duration-300 transform hover:scale-105 text-sm"
               >
-                🚀 Clase Gratis
-              </Link>
+                <FaGraduationCap />
+                Aula Virtual
+              </a>
             </div>
           </div>
         </div>
 
         {/* Línea divisoria */}
-        <div className="border-t border-gray-700 mt-8 pt-6">
+        <div className="border-t border-gray-600 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center mb-4 md:mb-0">
-              <span className="text-gray-400">
-                © 2025 CODISEA. Todos los derechos reservados.
-              </span>
+            <div className="flex items-center gap-2 mb-4 md:mb-0">
+              <span className="text-gray-300">Hecho con</span>
+              <FaHeart className="text-secondary" />
+              <span className="text-gray-300">por el equipo de</span>
+              <span className="brand-font text-gray-300 tracking-wide">
+                CODISEA
+                </span>
             </div>
-            
-            <div className="flex items-center space-x-4">
-              <span className="text-gray-400 text-sm flex items-center">
-                Hecho con <FaHeart className="text-red-500 mx-1" /> para los futuros programadores
+            <div className="text-gray-300 text-sm flex items-center gap-2">
+              <p>&copy; 2025</p>
+              <span className="brand-font text-gray-300 tracking-wide">
+                CODISEA
               </span>
-              <Link 
-                to="/admin/login" 
-                className="text-gray-600 text-xs hover:text-gray-400 transition-colors"
-              >
-                Administración
-              </Link>
+              <p>. Todos los derechos reservados.</p>
             </div>
+          </div>
+          
+          {/* Enlaces legales */}
+          <div className="flex flex-wrap justify-center gap-4 mt-4 text-sm">
+            <Link 
+              to="/privacidad" 
+              className="text-gray-400 hover:text-secondary transition-colors duration-300"
+            >
+              Política de Privacidad
+            </Link>
+            <Link 
+              to="/terminos" 
+              className="text-gray-400 hover:text-secondary transition-colors duration-300"
+            >
+              Términos y Condiciones
+            </Link>
+            <Link 
+              to="/cookies" 
+              className="text-gray-400 hover:text-secondary transition-colors duration-300"
+            >
+              Política de Cookies
+            </Link>
           </div>
         </div>
       </div>

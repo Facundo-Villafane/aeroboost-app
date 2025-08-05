@@ -13,10 +13,10 @@ import {
   FaChartLine,  // Modelo financiero
   FaBook,       // Servicios para instructores
   FaTasks,      // Solicitudes de servicio
-  FaMoneyBillWave // Panel de pagos
+  FaMoneyBillWave, // Panel de pagos
+  FaUsers       // Estudiantes
 } from 'react-icons/fa';
 import { doc, getDoc, getDocs, query, where, collection } from 'firebase/firestore';
-import logoImage2 from '../assets/logo2.webp';
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -92,6 +92,8 @@ const Dashboard = () => {
   if (isFounder) {
     menuItems.push(
       { path: '/admin/instructors', icon: <FaUserTie />, label: 'Instructores' },
+      { path: '/admin/courses', icon: <FaBook />, label: 'Cursos' },
+      { path: '/admin/students', icon: <FaUsers />, label: 'Estudiantes' },
       { path: '/admin/financials', icon: <FaChartLine />, label: 'Modelo Financiero' },
       { path: '/admin/payments', icon: <FaMoneyBillWave />, label: 'Pagos' }
     );
@@ -111,7 +113,8 @@ const Dashboard = () => {
       >
         <div className="flex items-center justify-between px-4">
           <div className="flex items-center space-x-2">
-            <img src={logoImage2} alt="Aeroboost" className="h-8" />
+            <h1 className="text-xl font-bold text-white brand-font">CODISEA</h1>
+            <span className="text-xs text-gray-400 font-medium">Admin</span>
           </div>
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}

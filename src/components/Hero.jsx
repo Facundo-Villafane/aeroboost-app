@@ -1,152 +1,185 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router';
-import { FaCode, FaRocket, FaGamepad, FaClock, FaUsers, FaGraduationCap, FaLaptop } from 'react-icons/fa';
+import { FaCode, FaRocket, FaGamepad, FaClock, FaUsers, FaGraduationCap, FaLaptop, FaStar, FaPlay } from 'react-icons/fa';
 
 const Hero = () => {
   return (
-    <div className="relative bg-gradient-to-br from-primary via-primary to-outline text-complement py-24 overflow-hidden">
-      {/* Overlay sutil para mejorar legibilidad */}
-      <div className="absolute inset-0 bg-primary/90"></div>
-      
-      {/* Elementos flotantes de código */}
+    <div className="relative min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 overflow-hidden">
+      {/* Geometric background patterns */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-primary rounded-full opacity-20 blur-xl animate-pulse-glow"></div>
+        <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-accent rounded-full opacity-30 blur-lg"></div>
+        <div className="absolute bottom-32 left-32 w-40 h-40 bg-gradient-warm rounded-full opacity-15 blur-2xl"></div>
+        <div className="absolute bottom-20 right-10 w-28 h-28 bg-primary rounded-full opacity-25 blur-xl"></div>
+      </div>
+
+      {/* Floating code elements - modernized */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute top-20 left-10 text-secondary text-2xl"
-          animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 3, repeat: Infinity }}
+          className="absolute top-20 left-10 text-white text-2xl font-mono font-bold opacity-40"
+          animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+          transition={{ duration: 6, repeat: Infinity }}
         >
-          {'</>'}
+          {'<Code />'}
         </motion.div>
         <motion.div
-          className="absolute top-32 right-20 text-secondary text-lg"
-          animate={{ y: [0, 20, 0] }}
-          transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+          className="absolute top-32 right-20 text-yellow-300 text-lg font-mono opacity-35"
+          animate={{ y: [0, 20, 0], rotate: [0, -3, 0] }}
+          transition={{ duration: 8, repeat: Infinity, delay: 1 }}
         >
-          function()
+          const learn = () => {}
         </motion.div>
         <motion.div
-          className="absolute bottom-32 left-20 text-secondary text-xl"
-          animate={{ y: [0, -15, 0] }}
-          transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
+          className="absolute bottom-32 left-20 text-cyan-300 text-xl font-mono opacity-40"
+          animate={{ y: [0, -15, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 7, repeat: Infinity, delay: 0.5 }}
         >
-          {'{ }'}
+          {'{ dream: true }'}
         </motion.div>
         <motion.div
-          className="absolute bottom-20 right-32 text-secondary text-lg"
-          animate={{ y: [0, 25, 0] }}
-          transition={{ duration: 4.5, repeat: Infinity, delay: 2 }}
+          className="absolute bottom-20 right-32 text-white text-lg font-mono opacity-30"
+          animate={{ y: [0, 25, 0], rotate: [0, 2, 0] }}
+          transition={{ duration: 9, repeat: Infinity, delay: 2 }}
         >
-          if (true)
+          while (coding) 🚀
         </motion.div>
       </div>
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10 flex items-center min-h-screen">
         <motion.div 
-          className="max-w-4xl mx-auto text-center"
-          initial={{ opacity: 0, y: 20 }}
+          className="max-w-5xl mx-auto text-center py-20"
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.8 }}
         >
-          {/* Logo/Título principal */}
-          <motion.h1 
-            className="text-5xl md:text-7xl font-bold mb-6 brand-font"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-          >
-            <span className="text-secondary">COD</span>
-            <span className="text-complement">I</span>
-            <span className="text-secondary">SEA</span>
-          </motion.h1>
-          
-          {/* Subtítulo con animación de typing */}
+          {/* Badge superior */}
           <motion.div
-            className="text-xl md:text-2xl mb-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
-            <span className="typing-animation">
-              Programación para Niños y Jóvenes
-            </span>
-          </motion.div>
-          
-          <motion.p 
-            className="text-lg md:text-xl mb-8 max-w-3xl mx-auto leading-relaxed text-secondary-2"
+            className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 mb-8 shadow-xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
           >
-            Descubre el emocionante mundo de la programación de forma divertida y creativa. 
-            Aprende a crear videojuegos, aplicaciones y sitios web mientras desarrollas 
-            pensamiento lógico y habilidades del futuro.
+            <FaStar className="text-yellow-500 text-sm" />
+            <span className="text-sm font-semibold text-gray-800">La mejor academia de programación para jóvenes</span>
+            <FaStar className="text-yellow-500 text-sm" />
+          </motion.div>
+
+          {/* Logo/Título principal modernizado */}
+          <motion.h1 
+            className="text-6xl md:text-8xl font-bold mb-8 brand-font text-white drop-shadow-2xl"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            CODISEA
+          </motion.h1>
+
+          {/* Subtítulo moderno */}
+          <motion.h2 
+            className="text-2xl md:text-4xl mb-8 text-white font-medium leading-tight drop-shadow-lg"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            Transforma tu{' '}
+            <span className="text-yellow-300 font-bold">pasión por la tecnología</span>
+            <br />
+            en tu superpoder del futuro
+          </motion.h2>
+
+          {/* Descripción principal mejorada */}
+          <motion.p 
+            className="text-lg md:text-xl mb-12 text-white/90 leading-relaxed max-w-4xl mx-auto drop-shadow-md"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            Desde crear videojuegos increíbles hasta desarrollar aplicaciones web profesionales, 
+            nuestros cursos están diseñados para estudiantes de 8 a 17 años que sueñan en grande. 
+            <span className="font-semibold text-cyan-300">¡Sin experiencia previa necesaria!</span>
           </motion.p>
 
-          {/* Iconos de características */}
+          {/* Estadísticas modernizadas */}
           <motion.div 
-            className="flex justify-center gap-8 mb-10"
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 max-w-4xl mx-auto"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.9 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <div className="flex flex-col items-center">
-              <FaCode className="text-4xl text-secondary mb-2" />
-              <span className="text-sm text-complement">Aprende Coding</span>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-6 text-center group hover:scale-105 transition-all duration-300 shadow-xl">
+              <div className="text-4xl font-bold text-white mb-2">500+</div>
+              <div className="text-white/80 font-medium">Estudiantes felices</div>
+              <FaUsers className="text-cyan-300 text-2xl mx-auto mt-3" />
             </div>
-            <div className="flex flex-col items-center">
-              <FaGamepad className="text-4xl text-secondary mb-2" />
-              <span className="text-sm text-complement">Crea Juegos</span>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-6 text-center group hover:scale-105 transition-all duration-300 shadow-xl">
+              <div className="text-4xl font-bold text-white mb-2">15+</div>
+              <div className="text-white/80 font-medium">Cursos especializados</div>
+              <FaCode className="text-yellow-300 text-2xl mx-auto mt-3" />
             </div>
-            <div className="flex flex-col items-center">
-              <FaRocket className="text-4xl text-secondary mb-2" />
-              <span className="text-sm text-complement">Proyectos Reales</span>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-6 text-center group hover:scale-105 transition-all duration-300 shadow-xl">
+              <div className="text-4xl font-bold text-white mb-2">98%</div>
+              <div className="text-white/80 font-medium">Tasa de satisfacción</div>
+              <FaStar className="text-yellow-400 text-2xl mx-auto mt-3" />
             </div>
           </motion.div>
-          
-          {/* Botones de acción */}
+
+          {/* Botones de acción modernizados */}
           <motion.div 
-            className="flex flex-wrap gap-4 justify-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1.1 }}
+            transition={{ duration: 0.8, delay: 1.0 }}
           >
             <Link 
               to="/servicios" 
-              className="px-8 py-4 bg-secondary text-outline font-semibold rounded-full hover:bg-accent hover:text-complement transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2"
+              className="bg-white text-blue-600 px-10 py-4 font-bold rounded-2xl flex items-center gap-3 text-lg group hover:bg-blue-50 transition-all shadow-xl border-2 border-white"
             >
-              <FaRocket />
+              <FaRocket className="group-hover:animate-bounce" />
               Explorar Cursos
             </Link>
+            <button className="bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 hover:bg-white hover:text-blue-600 transition-all shadow-xl">
+              <FaPlay />
+              Ver Demo
+            </button>
+          </motion.div>
+
+          {/* Información adicional modernizada */}
+          <motion.div 
+            className="flex flex-wrap justify-center gap-4 mt-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+          >
+            <div className="flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20 shadow-lg">
+              <FaUsers className="text-cyan-300" />
+              <span className="text-white font-semibold">8 a 17 años</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20 shadow-lg">
+              <FaLaptop className="text-yellow-300" />
+              <span className="text-white font-semibold">100% Online</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20 shadow-lg">
+              <FaGraduationCap className="text-green-300" />
+              <span className="text-white font-semibold">Certificaciones</span>
+            </div>
+          </motion.div>
+
+          {/* Enlace al aula virtual destacado */}
+          <motion.div 
+            className="mt-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.4 }}
+          >
             <a 
               href="https://aula.codisea.dev/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="px-8 py-4 bg-complement text-primary font-semibold rounded-full hover:bg-secondary-2 hover:text-outline transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg"
+              className="inline-flex items-center gap-2 text-white hover:text-yellow-300 transition-colors font-semibold underline decoration-2 underline-offset-4"
             >
               <FaGraduationCap />
               Acceder al Aula Virtual
             </a>
-          </motion.div>
-
-          {/* Información adicional */}
-          <motion.div 
-            className="flex justify-center gap-6 mt-8 text-sm opacity-90"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1.3 }}
-          >
-            <div className="flex items-center gap-2">
-              <FaUsers className="text-secondary" />
-              <span className="text-complement">8 a 17 años</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <FaLaptop className="text-secondary" />
-              <span className="text-complement">Clases Online</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <FaCode className="text-secondary" />
-              <span className="text-complement">Sin experiencia previa</span>
-            </div>
           </motion.div>
         </motion.div>
       </div>

@@ -1,12 +1,23 @@
-
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router';
-import { FaGraduationCap, FaAward, FaUsers, FaHandshake } from 'react-icons/fa';
+import { Helmet } from 'react-helmet';
 import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import { db } from '../firebase';
 import { getGravatarUrl } from '../utils/gravatar';
-import { Helmet } from 'react-helmet';
+import { 
+  FaCode, 
+  FaUsers, 
+  FaHeart, 
+  FaLightbulb, 
+  FaTrophy,
+  FaGraduationCap,
+  FaStar,
+  FaRocket,
+  FaGlobe,
+  FaAward,
+  FaCalendarAlt
+} from 'react-icons/fa';
 
 const AboutPage = () => {
   const [instructors, setInstructors] = useState([]);
@@ -54,140 +65,203 @@ const AboutPage = () => {
     }
   };
 
-  // Valores y misión
-  const values = [
-    {
-      icon: <FaGraduationCap className="text-3xl text-primary mb-4" />,
-      title: "Excelencia Educativa",
-      description: "Nos comprometemos a proporcionar la más alta calidad en todas nuestras actividades educativas, manteniendo estándares rigurosos y adaptándonos a las necesidades individuales."
-    },
-    {
-      icon: <FaAward className="text-3xl text-primary mb-4" />,
-      title: "Profesionalismo",
-      description: "Fomentamos un ambiente que valora la ética, la integridad y el compromiso con la mejora continua, tanto en nuestros instructores como en nuestros estudiantes."
-    },
-    {
-      icon: <FaUsers className="text-3xl text-primary mb-4" />,
-      title: "Enfoque Personalizado",
-      description: "Reconocemos la individualidad de cada estudiante y adaptamos nuestros métodos de enseñanza para maximizar su potencial de aprendizaje."
-    },
-    {
-      icon: <FaHandshake className="text-3xl text-primary mb-4" />,
-      title: "Colaboración",
-      description: "Trabajamos en estrecha colaboración con instituciones educativas y profesionales del sector para asegurar que nuestros servicios sean relevantes y actualizados."
-    }
-  ];
-
   return (
-    <div className="py-16">
+    <div className="min-h-screen bg-gray-50">
       <Helmet>
-        <title>Sobre Nosotros | AeroBoost Learning Center</title>
+        <title>Sobre Nosotros - CODISEA | Academia de Programación</title>
         <meta 
           name="description" 
-          content="Conoce la historia de AeroBoost, nuestro equipo docente y los valores que nos han convertido en referentes del apoyo académico especializado para carreras aeronáuticas."
+          content="Conoce la historia de CODISEA, nuestro equipo de instructores expertos y los valores que nos han convertido en referentes de la educación en programación para jóvenes."
         />
         <meta 
           name="keywords" 
-          content="AeroBoost historia, instructores aeronáuticos, centro formación aviación, equipo docente aviación, valores educativos aeronáutica"
+          content="CODISEA historia, instructores programación, academia coding, equipo docente, valores educativos, programación jóvenes Argentina"
         />
       </Helmet>
-      <div className="container mx-auto px-4">
-        {/* Hero section */}
+
+      {/* Hero Section Modernizado */}
+      <div className="relative bg-gradient-to-br from-primary via-accent to-secondary text-white py-24 overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-20 w-40 h-40 bg-white/10 rounded-full blur-3xl animate-pulse-glow"></div>
+          <div className="absolute bottom-20 right-20 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+        </div>
+        
         <motion.div 
-          className="text-center mb-16"
+          className="container mx-auto px-4 relative z-10"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3 mb-8"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <FaHeart className="text-white" />
+              <span className="font-semibold">Nuestra Historia</span>
+            </motion.div>
+            
+            <motion.h1 
+              className="text-5xl md:text-7xl font-bold mb-8 brand-font leading-tight"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              Transformando{' '}
+              <span className="text-secondary">
+                el futuro
+              </span>{' '}
+              de la educación
+            </motion.h1>
+            
+            <motion.p 
+              className="text-xl md:text-2xl mb-12 opacity-90 leading-relaxed max-w-3xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              Desde 2020, CODISEA ha sido pionera en enseñar programación de manera divertida, 
+              creativa e inspiradora para las nuevas generaciones digitales.
+            </motion.p>
+            
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              <div className="text-center">
+                <div className="text-4xl font-bold mb-2">500+</div>
+                <div className="opacity-80">Estudiantes graduados</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold mb-2">4</div>
+                <div className="opacity-80">Años de experiencia</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold mb-2">98%</div>
+                <div className="opacity-80">Satisfacción familiar</div>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+
+      <div className="container mx-auto px-4 py-16">
+        {/* Historia */}
+        <motion.div 
+          className="bg-white rounded-2xl shadow-lg p-8 mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Nuestra Historia</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Conoce quiénes somos y nuestra pasión por la formación aeronáutica de excelencia
-          </p>
+          <h2 className="text-3xl font-bold text-primary mb-6">Nuestra Historia</h2>
+          <div className="prose prose-lg max-w-none text-gray-700">
+            <p className="mb-4">
+              CODISEA nació en 2020 de la visión de un grupo de desarrolladores y educadores que identificaron 
+              una necesidad crítica: enseñar programación de manera efectiva y divertida a las nuevas generaciones.
+            </p>
+            <p className="mb-4">
+              Durante la pandemia, cuando la educación digital se volvió esencial, nos dimos cuenta de que los 
+              métodos tradicionales no funcionaban para enseñar programación a jóvenes. Necesitábamos algo diferente, 
+              algo que los motivara y los emocionara.
+            </p>
+            <p>
+              Hoy, después de formar a más de 500 estudiantes, CODISEA se ha convertido en una referencia en 
+              educación tecnológica para jóvenes, manteniendo siempre nuestro compromiso con la excelencia y 
+              la innovación educativa.
+            </p>
+          </div>
         </motion.div>
 
-        {/* Historia y descripción */}
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-12 mb-24">
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Nuestros Inicios</h2>
-            <p className="text-gray-700 mb-4">
-            AeroBoost Learning Center nace de la visión de un grupo de profesionales del sector aeronáutico que identificaron la necesidad de contar con servicios de apoyo académico especializados para estudiantes de carreras aeronáuticas.
-            </p>
-            <p className="text-gray-700 mb-4">
-            Lo que comenzó como una idea para ofrecer tutoría especializada se ha transformado en un proyecto educativo integral, enfocado en brindar apoyo personalizado a estudiantes que enfrentan los desafíos de estas exigentes carreras.            </p>
-            <p className="text-gray-700">
-            Nuestro equipo combina una sólida experiencia en el campo aeronáutico con metodologías pedagógicas efectivas, diseñadas específicamente para abordar las necesidades únicas de los estudiantes de aviación. Nuestro compromiso es convertirnos en un aliado esencial en el camino académico de quienes aspiran a destacarse en el apasionante mundo de la aeronáutica.            </p>
-          </motion.div>
-          
-        </div>
-
-        {/* Misión y Visión */}
+        {/* Estadísticas */}
         <motion.div 
-          className="bg-gray-50 p-8 rounded-lg shadow-sm mb-24"
-          initial={{ opacity: 0, y: 30 }}
+          className="bg-white rounded-2xl shadow-lg p-8 mb-16"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h2 className="text-2xl font-bold text-primary mb-4">Nuestra Misión</h2>
-              <p className="text-gray-700">
-                Proporcionar servicios educativos de alta calidad que ayuden a los estudiantes de carreras aeronáuticas a superar sus desafíos académicos, desarrollar confianza en sus habilidades y alcanzar sus metas profesionales en la industria de la aviación.
-              </p>
+          <h2 className="text-3xl font-bold text-primary mb-8 text-center">Nuestros Logros</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center">
+              <FaGraduationCap className="text-4xl text-secondary mx-auto mb-2" />
+              <div className="text-3xl font-bold text-primary mb-1">500+</div>
+              <div className="text-gray-600">Estudiantes graduados</div>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h2 className="text-2xl font-bold text-primary mb-4">Nuestra Visión</h2>
-              <p className="text-gray-700">
-                Ser reconocidos como el centro de referencia en apoyo académico especializado para carreras aeronáuticas, innovando constantemente en nuestras metodologías y expandiendo nuestro alcance para beneficiar a estudiantes en todo el país.
-              </p>
+            <div className="text-center">
+              <FaTrophy className="text-4xl text-secondary mx-auto mb-2" />
+              <div className="text-3xl font-bold text-primary mb-1">95%</div>
+              <div className="text-gray-600">Tasa de finalización</div>
+            </div>
+            <div className="text-center">
+              <FaStar className="text-4xl text-secondary mx-auto mb-2" />
+              <div className="text-3xl font-bold text-primary mb-1">4.9/5</div>
+              <div className="text-gray-600">Satisfacción promedio</div>
+            </div>
+            <div className="text-center">
+              <FaCode className="text-4xl text-secondary mx-auto mb-2" />
+              <div className="text-3xl font-bold text-primary mb-1">15+</div>
+              <div className="text-gray-600">Cursos disponibles</div>
             </div>
           </div>
         </motion.div>
 
         {/* Valores */}
         <motion.div 
-          className="mb-24"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          className="bg-white rounded-2xl shadow-lg p-8 mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Nuestros Valores</h2>
+          <h2 className="text-3xl font-bold text-primary mb-8 text-center">Nuestros Valores</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
-              <motion.div 
-                key={index}
-                className="bg-white p-6 rounded-lg shadow-md text-center"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-              >
-                <div className="flex justify-center">
-                  {value.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-3">{value.title}</h3>
-                <p className="text-gray-700">{value.description}</p>
-              </motion.div>
-            ))}
+            <div className="text-center">
+              <FaHeart className="text-4xl text-secondary mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-primary mb-3">Pasión por Enseñar</h3>
+              <p className="text-gray-600">
+                Creemos que la programación es una herramienta poderosa para transformar ideas en realidad.
+              </p>
+            </div>
+            <div className="text-center">
+              <FaUsers className="text-4xl text-secondary mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-primary mb-3">Enfoque Personalizado</h3>
+              <p className="text-gray-600">
+                Cada estudiante es único. Adaptamos nuestro método de enseñanza para maximizar el potencial.
+              </p>
+            </div>
+            <div className="text-center">
+              <FaLightbulb className="text-4xl text-secondary mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-primary mb-3">Innovación Constante</h3>
+              <p className="text-gray-600">
+                Mantenemos nuestros programas actualizados con las últimas tecnologías educativas.
+              </p>
+            </div>
+            <div className="text-center">
+              <FaTrophy className="text-4xl text-secondary mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-primary mb-3">Excelencia Educativa</h3>
+              <p className="text-gray-600">
+                Nos comprometemos a brindar la mejor experiencia educativa con instructores capacitados.
+              </p>
+            </div>
           </div>
         </motion.div>
 
-        {/* Equipo docente */}
+        {/* Equipo */}
         <motion.div 
-          className="mb-16"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          className="bg-white rounded-2xl shadow-lg p-8 mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">Nuestro Equipo Docente</h2>
-          <p className="text-center text-gray-600 max-w-3xl mx-auto mb-12">
-            Contamos con instructores altamente calificados con amplia experiencia tanto en la industria aeronáutica como en la enseñanza.
+          <h2 className="text-3xl font-bold text-primary mb-6 text-center">Nuestro Equipo</h2>
+          <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
+            Contamos con instructores altamente calificados con amplia experiencia tanto en la industria tecnológica como en la enseñanza.
           </p>
           
           {loadingInstructors ? (
@@ -196,72 +270,74 @@ const AboutPage = () => {
               <p className="mt-6 text-gray-500 text-xl">Cargando perfiles...</p>
             </div>
           ) : instructors.length === 0 ? (
-            <div className="text-center bg-white py-16 rounded-lg shadow-md">
+            <div className="text-center py-16">
               <p className="text-gray-500 text-xl">
                 Próximamente conocerás a nuestro equipo docente.
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {instructors.map((instructor, index) => (
                 <motion.div 
                   key={instructor.id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden"
-                  initial={{ opacity: 0, y: 30 }}
+                  className="text-center"
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <div className="aspect-w-1 aspect-h-1">
+                  <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-4 border-primary">
                     <img 
                       src={instructor.photoURL} 
                       alt={instructor.displayName} 
-                      className="w-full h-64 object-cover"
+                      className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-gray-900">{instructor.displayName}</h3>
-                    <p className="text-primary font-medium mb-2">
-                      {instructor.role === 'founder' ? 'Fundador & Instructor' : 'Instructor'}
+                  <h3 className="text-lg font-bold text-primary mb-1">{instructor.displayName}</h3>
+                  <p className="text-secondary font-semibold mb-2">
+                    {instructor.role === 'founder' ? 'Fundador & Instructor' : 'Instructor'}
+                  </p>
+                  {instructor.specialty && (
+                    <p className="text-sm text-gray-600 mb-1">
+                      <strong>Especialidad:</strong> {instructor.specialty}
                     </p>
-                    {instructor.specialty && (
-                      <p className="text-gray-700 font-medium mb-1">Especialidad: {instructor.specialty}</p>
-                    )}
-                    {instructor.experience && (
-                      <p className="text-gray-700 text-sm">{instructor.experience}</p>
-                    )}
-                  </div>
+                  )}
+                  {instructor.experience && (
+                    <p className="text-sm text-gray-600">{instructor.experience}</p>
+                  )}
                 </motion.div>
               ))}
             </div>
           )}
         </motion.div>
 
-        {/* Call to action */}
+        {/* CTA */}
         <motion.div 
-          className="bg-gradient-to-r from-primary to-blue-700 text-white p-8 rounded-lg shadow-md text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          className="bg-gradient-to-r from-primary to-accent text-white rounded-2xl p-8 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-2xl font-bold mb-4">¿Quieres formar parte de nuestra comunidad educativa?</h2>
-          <p className="mb-6">
-            Descubre cómo nuestro equipo y nuestros servicios pueden ayudarte a alcanzar tus metas académicas.
+          <h2 className="text-3xl font-bold mb-4">¿Listo para comenzar?</h2>
+          <p className="text-lg mb-6 opacity-90">
+            Únete a la comunidad CODISEA y descubre cómo la programación puede transformar tu futuro.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link 
               to="/servicios"
-              className="px-6 py-3 bg-white text-primary font-semibold rounded-md hover:bg-gray-100 transition-colors"
+              className="px-6 py-3 bg-secondary text-primary font-semibold rounded-full hover:bg-yellow-400 transition-all duration-300 flex items-center gap-2"
               onClick={() => window.scrollTo(0, 0)}
             >
-              Conoce nuestros servicios
+              <FaCode />
+              Conoce Nuestros Cursos
             </Link>
             <Link 
               to="/contacto"
-              className="px-6 py-3 border-2 border-white text-white font-semibold rounded-md hover:bg-white hover:text-primary transition-colors"
+              className="px-6 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-primary transition-all duration-300 flex items-center gap-2"
               onClick={() => window.scrollTo(0, 0)}
             >
+              <FaUsers />
               Contáctanos
             </Link>
           </div>

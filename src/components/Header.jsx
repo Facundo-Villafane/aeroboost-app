@@ -7,7 +7,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-primary shadow-lg sticky top-0 z-50 border-b-2 border-secondary">
+    <header className="bg-white shadow-lg sticky top-0 z-50 border-b border-gray-200">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo CODISEA con isotipo */}
         <Link to="/" className="flex items-center group">
@@ -52,10 +52,10 @@ const Header = () => {
             
             {/* Texto CODISEA */}
             <div>
-              <h1 className="text-2xl font-bold text-complement brand-font tracking-wide">
+              <h1 className="text-2xl font-bold text-gray-800 brand-font tracking-wide">
                 CODISEA
               </h1>
-              <p className="text-xs text-secondary-2 leading-none font-medium">
+              <p className="text-xs text-gray-600 leading-none font-medium">
                 Programación para Jóvenes
               </p>
             </div>
@@ -66,14 +66,14 @@ const Header = () => {
         <div className="md:hidden">
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-complement focus:outline-none hover:text-secondary transition-colors duration-300 p-2"
+            className="text-gray-700 focus:outline-none hover:text-primary transition-colors duration-300 p-2"
           >
             {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
         </div>
         
         {/* Navegación */}
-        <div className={`md:flex ${isMenuOpen ? 'block absolute top-20 left-0 right-0 bg-primary p-4 shadow-lg border-t-2 border-secondary' : 'hidden'}`}>
+        <div className={`md:flex ${isMenuOpen ? 'block absolute top-20 left-0 right-0 bg-white p-4 shadow-lg border-t border-gray-200' : 'hidden'}`}>
           <Navbar setIsMenuOpen={setIsMenuOpen} />
         </div>
       </div>
