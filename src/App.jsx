@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router';
 import { AuthProvider } from './admin/AuthProvider';
 import { CartProvider } from './contexts/CartContext';
 
@@ -144,15 +144,19 @@ function App() {
           </Route>
           
           {/* Redirecciones para rutas no encontradas */}
-          <Route path="/admin/*" element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="*" element={
             <MainLayout>
               <div className="container mx-auto px-4 py-16 text-center">
                 <h1 className="text-4xl font-bold text-gray-800 mb-6">Página no encontrada</h1>
                 <p className="text-lg text-gray-600 mb-8">Lo sentimos, la página que buscas no existe.</p>
-                <a href="/" className="px-6 py-3 bg-primary text-white font-semibold rounded-md hover:bg-blue-700 transition-colors">
-                  Volver al inicio
-                </a>
+                <div className="space-x-4">
+                  <Link to="/" className="px-6 py-3 bg-primary text-white font-semibold rounded-md hover:bg-blue-700 transition-colors">
+                    Volver al inicio
+                  </Link>
+                  <Link to="/admin/login" className="px-6 py-3 bg-gray-600 text-white font-semibold rounded-md hover:bg-gray-700 transition-colors">
+                    Admin Login
+                  </Link>
+                </div>
               </div>
             </MainLayout>
           } />

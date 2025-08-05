@@ -29,9 +29,27 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Suscribirse a los cambios de autenticación
+    // Verificar primero si hay usuario mock guardado
+    const savedMockUser = localStorage.getItem('mockUser');
+    if (savedMockUser) {
+      try {
+        const user = JSON.parse(savedMockUser);
+        if (user.uid === 'test-user-123') {
+          setCurrentUser(user);
+          setLoading(false);
+          return;
+        }
+      } catch (error) {
+        localStorage.removeItem('mockUser');
+      }
+    }
+
+    // Suscribirse a los cambios de autenticación de Firebase
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
+      // Solo actualizar si no hay usuario mock
+      if (!localStorage.getItem('mockUser')) {
+        setCurrentUser(user);
+      }
       setLoading(false);
     });
 
@@ -75,22 +93,6 @@ export const AuthProvider = ({ children }) => {
       throw error;
     }
   };
-
-  // Verificar si hay usuario mock guardado al cargar
-  useEffect(() => {
-    const savedMockUser = localStorage.getItem('mockUser');
-    if (savedMockUser) {
-      try {
-        const user = JSON.parse(savedMockUser);
-        if (user.uid === 'test-user-123') {
-          setCurrentUser(user);
-        }
-      } catch (error) {
-        localStorage.removeItem('mockUser');
-      }
-    }
-    setLoading(false);
-  }, []);
 
   // Valor que se proveerá al contexto
   const value = {

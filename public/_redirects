@@ -1,0 +1,6 @@
+# Netlify redirects file for SPA
+# Handle all routes
+/*    /index.html   200
+
+# Specific admin routes (optional, for better SEO)
+/admin/*  /index.html  200

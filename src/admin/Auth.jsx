@@ -6,6 +6,7 @@ import { useNavigate, Link } from 'react-router';
 import { useAuth } from './AuthProvider';
 import { FaLock, FaUser, FaArrowLeft, FaCode, FaRocket } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import DebugAuth from './DebugAuth';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -201,6 +202,18 @@ const Auth = () => {
               Volver al sitio principal
             </Link>
           </motion.div>
+
+          {/* Debug Component - Solo en desarrollo */}
+          {import.meta.env.DEV && (
+            <motion.div
+              className="mt-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <DebugAuth />
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </div>
