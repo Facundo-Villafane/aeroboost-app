@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router';
 import useCourses from '../hooks/useCourses';
-import { FaCode, FaGamepad, FaMobile, FaGlobe, FaRobot, FaPython, FaArrowRight, FaGraduationCap, FaQuestionCircle, FaCubes, FaSpinner } from 'react-icons/fa';
+import { FaCode, FaGamepad, FaMobile, FaGlobe, FaRobot, FaPython, FaArrowRight, FaGraduationCap, FaQuestionCircle, FaCubes, FaSpinner, FaBlog } from 'react-icons/fa';
 
 const Services = () => {
   const { courses: fetchedCourses, loading, error } = useCourses({ 
@@ -9,45 +9,8 @@ const Services = () => {
     limit: 3 
   });
 
-  // Cursos de fallback por si no se pueden cargar desde Firebase
-  const fallbackCourses = [
-    {
-      id: "roblox-principiantes",
-      title: "Roblox Studio para Principiantes",
-      description: "Crea tus propios mundos y videojuegos en Roblox usando Lua. Perfecto para principiantes de 8-12 años que quieren dar vida a su creatividad.",
-      category: "roblox",
-      ageRange: "8-12 años",
-      duration: "10 semanas",
-      level: "Principiante",
-      price: 15000,
-      featured: true
-    },
-    {
-      id: "python-completo",
-      title: "Python para Principiantes y Avanzados",
-      description: "Aprende Python desde cero, uno de los lenguajes más populares. Desde conceptos básicos hasta proyectos avanzados con inteligencia artificial.",
-      category: "python",
-      ageRange: "10-17 años",
-      duration: "14 semanas",
-      level: "Principiante a Avanzado",
-      price: 20000,
-      featured: true
-    },
-    {
-      id: "desarrollo-web",
-      title: "Desarrollo Web Moderno",
-      description: "Crea sitios web increíbles con HTML, CSS y JavaScript. Aprende a diseñar y programar páginas web profesionales y responsivas.",
-      category: "web",
-      ageRange: "14-17 años",
-      duration: "16 semanas",
-      level: "Intermedio",
-      price: 18000,
-      featured: true
-    }
-  ];
-
-  // Usar cursos de Firebase si están disponibles, sino usar fallback
-  const courses = fetchedCourses.length > 0 ? fetchedCourses : (error ? fallbackCourses : []);
+  // Solo usar cursos dinámicos de Firebase
+  const courses = fetchedCourses;
 
   const getCourseIcon = (category) => {
     const icons = {
@@ -168,24 +131,79 @@ const Services = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-16">
-            <div className="mb-6">
-              <FaCode className="text-6xl text-gray-300 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-complement mb-3">
-                ¡Pronto nuevos cursos!
+          <motion.div 
+            className="text-center py-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="mb-8">
+              <motion.div
+                className="inline-flex items-center justify-center w-24 h-24 bg-primary/10 rounded-full mb-6"
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <FaCode className="text-4xl text-primary" />
+              </motion.div>
+              <h3 className="text-3xl font-bold text-complement mb-4 brand-font">
+                ¡Cursos en Desarrollo!
               </h3>
-              <p className="text-complement max-w-md mx-auto leading-relaxed">
-                Estamos preparando cursos increíbles para ti. Mientras tanto, puedes contactarnos para consultas personalizadas.
+              <p className="text-complement max-w-2xl mx-auto leading-relaxed text-lg">
+                Nuestro equipo está diseñando experiencias de aprendizaje increíbles. 
+                Pronto tendremos cursos de programación que transformarán la forma en que los jóvenes aprenden tecnología.
               </p>
             </div>
-            <Link 
-              to="/contacto"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-primary text-complement font-semibold rounded-full hover:bg-accent transition-all duration-300 transform hover:scale-105"
-            >
-              <FaGraduationCap />
-              Consultar Cursos Disponibles
-            </Link>
-          </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-8">
+              <motion.div 
+                className="bg-gradient-to-br from-primary/10 to-accent/10 p-6 rounded-2xl border border-primary/20"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
+                <FaCubes className="text-3xl text-primary mx-auto mb-3" />
+                <h4 className="font-bold text-complement mb-2">Roblox Studio</h4>
+                <p className="text-sm text-complement/80">Creación de mundos virtuales</p>
+              </motion.div>
+              <motion.div 
+                className="bg-gradient-to-br from-secondary/10 to-primary/10 p-6 rounded-2xl border border-secondary/20"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
+                <FaPython className="text-3xl text-secondary mx-auto mb-3" />
+                <h4 className="font-bold text-complement mb-2">Python</h4>
+                <p className="text-sm text-complement/80">Programación desde cero</p>
+              </motion.div>
+              <motion.div 
+                className="bg-gradient-to-br from-accent/10 to-secondary/10 p-6 rounded-2xl border border-accent/20"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
+                <FaGlobe className="text-3xl text-accent mx-auto mb-3" />
+                <h4 className="font-bold text-complement mb-2">Desarrollo Web</h4>
+                <p className="text-sm text-complement/80">Sitios web modernos</p>
+              </motion.div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link 
+                to="/contacto"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-complement font-bold rounded-2xl hover:bg-accent transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                <FaGraduationCap />
+                Consultar Disponibilidad
+              </Link>
+              <Link 
+                to="/blog"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-secondary text-outline font-semibold rounded-2xl hover:bg-accent hover:text-complement transition-all duration-300 transform hover:scale-105"
+              >
+                <FaBlog />
+                Seguir Nuestro Blog
+              </Link>
+            </div>
+          </motion.div>
         )}
 
         {/* Cursos adicionales */}

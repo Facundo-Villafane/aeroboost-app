@@ -1,66 +1,13 @@
 
 import { motion } from 'framer-motion';
 import { Link } from 'react-router';
-import { useState, useEffect } from 'react';
-import { collection, query, where, orderBy, limit, getDocs } from 'firebase/firestore';
-import { db } from '../firebase';
-import { FaBlog, FaUser, FaCalendarAlt, FaArrowRight, FaCode, FaTag, FaEye } from 'react-icons/fa';
+import useBlogPosts from '../hooks/useBlogPosts';
+import { FaBlog, FaUser, FaCalendarAlt, FaArrowRight, FaCode, FaTag, FaEye, FaSpinner } from 'react-icons/fa';
 
 const BlogPreview = () => {
-  const [blogPosts, setBlogPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const postsQuery = query(
-          collection(db, 'posts'),
-          where('status', '==', 'Publicado'),
-          orderBy('date', 'desc'),
-          limit(3)
-        );
-        
-        const querySnapshot = await getDocs(postsQuery);
-        
-        if (!querySnapshot.empty) {
-          const posts = querySnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }));
-          setBlogPosts(posts);
-        } else {
-          setBlogPosts([]);
-        }
-      } catch (error) {
-        console.error("Error al cargar las publicaciones del blog:", error);
-        setBlogPosts([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
-  const formatDate = (dateData) => {
-    if (!dateData) return 'Fecha no disponible';
-    
-    let date;
-    if (typeof dateData === 'string') {
-      date = new Date(dateData);
-    } else if (dateData.seconds) {
-      // Firestore Timestamp
-      date = new Date(dateData.seconds * 1000);
-    } else {
-      date = new Date(dateData);
-    }
-      
-    return date.toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
+  const { posts: blogPosts, loading, error, formatDate } = useBlogPosts({ 
+    limitCount: 3 
+  });
 
   return (
     <section className="py-16 bg-gray-50">
@@ -87,8 +34,20 @@ const BlogPreview = () => {
 
         {loading ? (
           <div className="flex flex-col justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
-            <p className="text-gray-600">Cargando artículos...</p>
+            <FaSpinner className="animate-spin text-4xl text-primary mb-4" />
+            <p className="text-gray-600 text-lg">Cargando artículos...</p>
+          </div>
+        ) : error ? (
+          <div className="text-center py-16">
+            <div className="mb-6">
+              <FaBlog className="text-6xl text-red-300 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-red-600 mb-3">
+                Error al cargar el blog
+              </h3>
+              <p className="text-gray-600 max-w-md mx-auto leading-relaxed">
+                Hubo un problema al cargar los artículos. Por favor, intenta más tarde.
+              </p>
+            </div>
           </div>
         ) : blogPosts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -103,11 +62,26 @@ const BlogPreview = () => {
                 whileHover={{ y: -5 }}
               >
                 <div className="relative overflow-hidden">
-                  <img 
-                    src={post.coverImage || '/images/default-blog.jpg'} 
-                    alt={post.title} 
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  {post.coverImage ? (
+                    <img 
+                      src={post.coverImage} 
+                      alt={post.title} 
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+                  <div 
+                    className={`w-full h-48 bg-gradient-to-br from-primary to-accent flex items-center justify-center ${post.coverImage ? 'hidden' : 'flex'}`}
+                    style={{ display: post.coverImage ? 'none' : 'flex' }}
+                  >
+                    <div className="text-center text-white">
+                      <FaBlog className="text-4xl mb-2 mx-auto opacity-80" />
+                      <p className="text-sm font-medium opacity-90">Imagen del artículo</p>
+                    </div>
+                  </div>
                   {post.tags && post.tags.length > 0 && (
                     <div className="absolute top-4 left-4 bg-secondary text-primary px-3 py-1 rounded-full text-sm font-semibold">
                       <FaTag className="inline mr-1" />
@@ -135,11 +109,11 @@ const BlogPreview = () => {
                   </div>
                   
                   <h3 className="text-xl font-bold text-primary mb-3 group-hover:text-accent transition-colors duration-300 line-clamp-2">
-                    {post.title}
+                    {post.title || 'Título del artículo'}
                   </h3>
                   
                   <p className="text-gray-700 mb-4 line-clamp-3 leading-relaxed">
-                    {post.excerpt}
+                    {post.excerpt || 'Descripción del artículo no disponible...'}
                   </p>
                   
                   <Link 
@@ -172,18 +146,30 @@ const BlogPreview = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto mt-8">
-              <div className="bg-gray-100 p-4 rounded-xl">
-                <FaCode className="text-2xl text-secondary mx-auto mb-2" />
+              <motion.div 
+                className="bg-gradient-to-br from-primary/10 to-accent/10 p-4 rounded-xl border border-primary/20"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
+                <FaCode className="text-2xl text-primary mx-auto mb-2" />
                 <p className="text-sm text-gray-700 font-medium">Tutoriales de Código</p>
-              </div>
-              <div className="bg-gray-100 p-4 rounded-xl">
+              </motion.div>
+              <motion.div 
+                className="bg-gradient-to-br from-secondary/10 to-primary/10 p-4 rounded-xl border border-secondary/20"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
                 <FaBlog className="text-2xl text-secondary mx-auto mb-2" />
                 <p className="text-sm text-gray-700 font-medium">Noticias Tech</p>
-              </div>
-              <div className="bg-gray-100 p-4 rounded-xl">
-                <FaUser className="text-2xl text-secondary mx-auto mb-2" />
+              </motion.div>
+              <motion.div 
+                className="bg-gradient-to-br from-accent/10 to-secondary/10 p-4 rounded-xl border border-accent/20"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
+                <FaUser className="text-2xl text-accent mx-auto mb-2" />
                 <p className="text-sm text-gray-700 font-medium">Historias de Éxito</p>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         )}
