@@ -1,8 +1,10 @@
 import { useAuth } from './AuthProvider';
+import { useRole } from '../hooks/useRole';
 import { auth } from '../firebase';
 
 const DebugAuth = () => {
   const { currentUser, loading } = useAuth();
+  const { userRole, hasAdminAccess, loading: roleLoading } = useRole();
   
   const firebaseConfigCheck = {
     apiKey: !!import.meta.env.VITE_FIREBASE_API_KEY,
@@ -18,8 +20,11 @@ const DebugAuth = () => {
     <div className="p-4 bg-gray-100 rounded-lg text-sm">
       <h3 className="font-bold mb-2">Debug Auth Status</h3>
       <div className="space-y-1">
-        <p><strong>Loading:</strong> {loading ? 'true' : 'false'}</p>
+        <p><strong>Auth Loading:</strong> {loading ? 'true' : 'false'}</p>
+        <p><strong>Role Loading:</strong> {roleLoading ? 'true' : 'false'}</p>
         <p><strong>Current User:</strong> {currentUser ? currentUser.email : 'null'}</p>
+        <p><strong>User Role:</strong> {userRole || 'not determined'}</p>
+        <p><strong>Has Admin Access:</strong> {hasAdminAccess ? '✅ Yes' : '❌ No'}</p>
         <p><strong>Auth Instance:</strong> {auth ? 'initialized' : 'not initialized'}</p>
         <p><strong>Environment:</strong> {import.meta.env.MODE}</p>
         
